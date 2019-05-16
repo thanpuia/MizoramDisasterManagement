@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AfterLogin.DashboardActivity"
+    android:orientation="vertical"
+    android:background="@color/colorPrimaryDark">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="Dashboard"
+        android:textSize="32dp"
+        android:textColor="@color/textOffWhite"
+        android:background="@drawable/gradient"
+        android:gravity="center"
+
+        />
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:orientation="horizontal"
+        android:rowCount="3"
+        android:layout_gravity="center"
+        >
+
+
+        <Button
+            android:id="@+id/incidentReportButton"
+            android:layout_width="@dimen/buttonWidth"
+            android:layout_height="@dimen/buttonHeight"
+            android:onClick="incidentReportClick"
+            android:text="Incident Report"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/buttonColor"
+            android:textColor="@color/textOffWhite"
+            />
+
+        <Button
+            android:id="@+id/requestReliefButton"
+            android:layout_width="@dimen/buttonWidth"
+            android:layout_height="@dimen/buttonHeight"
+            android:onClick="requestReliefClick"
+            android:text="Request Relief"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/buttonColor"
+            android:textColor="@color/textOffWhite"/>
+
+        <Button
+
+            android:layout_width="@dimen/buttonWidth"
+            android:layout_height="@dimen/buttonHeight"
+            android:text="Nothing"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/buttonColor"
+            android:textColor="@color/textOffWhite"/>
+
+        <Button
+            android:id="@+id/signoutButton"
+            android:layout_width="@dimen/buttonWidth"
+            android:layout_height="@dimen/buttonHeight"
+            android:onClick="signoutClick"
+            android:text="sign out"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/buttonColor"
+            android:textColor="@color/textOffWhite"/>
+
+
+    </GridLayout>
+</LinearLayout>

@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">Mizoram Disaster Management</string>
+
+    <string-array name="district">
+        <item>Mamit</item>
+        <item>Kolasib</item>
+        <item>Aizawl</item>
+        <item>Champhai</item>
+        <item>Serchhip</item>
+        <item>Lunglei</item>
+        <item>Lawngtlai</item>
+        <item>Siaha</item>
+    </string-array>
+
+
+    <string-array name="Mamit">
+        <item>Mamit_Veng1</item>
+        <item>Mamit_Veng2</item>
+    </string-array>
+
+
+    <string-array name="Kolasib">
+        <item>Kolasib_Veng1</item>
+        <item>Kolasib_Veng2</item>
+    </string-array>
+
+
+    <string-array name="Aizawl">
+        <item>Aizawl_Veng1</item>
+        <item>Aizawl_Veng2</item>
+    </string-array>
+
+    <string-array name="Champhai">
+        <item>Champhai_Veng1</item>
+        <item>Champhai_Veng2</item>
+    </string-array>
+
+
+    <string-array name="Serchhip">
+        <item>Serchhip_Veng1</item>
+        <item>Serchhip_Veng2</item>
+    </string-array>
+
+
+    <string-array name="Lunglei">
+        <item>Lunglei_Veng1</item>
+        <item>Lunglei_Veng2</item>
+    </string-array>
+    <string-array name="Lawngtlai">
+        <item>Lawngtlai_Veng1</item>
+        <item>Lawngtlai_Veng2</item>
+    </string-array>
+
+
+    <string-array name="Siaha">
+        <item>Siaha_Veng1</item>
+        <item>Siaha_Veng2</item>
+    </string-array>
+
+
+</resources>
