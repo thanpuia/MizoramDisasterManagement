@@ -6,7 +6,7 @@ public class Incident {
     String disasterType;
     String locality;
     String landmarks;
-    String disasterDetails;
+    String disastersDetails;
     String details;
     String disasterTypeId;
     String district;
@@ -33,7 +33,7 @@ public class Incident {
         this.disasterType = disasterType;
         this.locality = locality;
         this.landmarks = landmarks;
-        this.disasterDetails = disasterDetails;
+        this.disastersDetails = disasterDetails;
         this.details = details;
         this.disasterTypeId = disasterTypeId;
         this.district = district;
@@ -84,12 +84,12 @@ public class Incident {
         this.landmarks = landmarks;
     }
 
-    public String getDisasterDetails() {
-        return disasterDetails;
+    public String getDisastersDetails() {
+        return disastersDetails;
     }
 
-    public void setDisasterDetails(String disasterDetails) {
-        this.disasterDetails = disasterDetails;
+    public void setDisastersDetails(String disasterDetails) {
+        this.disastersDetails = disasterDetails;
     }
 
     public String getDetails() {

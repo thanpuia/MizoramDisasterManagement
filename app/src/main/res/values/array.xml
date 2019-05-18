@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="material_lists">
+        <item>Water</item>
+        <item>Rice</item>
+        <item>Hammer</item>
+        <item>Saw</item>
+        <item>Mattress</item>
+        <item>Blanket</item>
+        <item>Gas Stove</item>
+        <item>etc..</item>
+    </string-array>
+</resources>

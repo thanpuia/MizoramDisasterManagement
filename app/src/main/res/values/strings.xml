@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name">Mizoram Disaster Management</string>
+    <string name="app_name">Database Demo</string>
 
     <string-array name="district">
+
         <item>Mamit</item>
         <item>Kolasib</item>
         <item>Aizawl</item>
@@ -12,50 +13,95 @@
         <item>Siaha</item>
     </string-array>
 
-
     <string-array name="Mamit">
-        <item>Mamit_Veng1</item>
-        <item>Mamit_Veng2</item>
+        <item>Mamit1</item>
+        <item>Mamit2</item>
+        <item>Mamit3</item>
+        <item>Mamit4</item>
+        <item>Mamit5</item>
+        <item>Mamit6</item>
+        <item>Mamit7</item>
+        <item>Mamit8</item>
     </string-array>
-
-
     <string-array name="Kolasib">
-        <item>Kolasib_Veng1</item>
-        <item>Kolasib_Veng2</item>
+        <item>Kolasib1</item>
+        <item>Kolasib2</item>
+        <item>Kolasib3</item>
+        <item>Kolasib4</item>
+        <item>Kolasib5</item>
+        <item>Kolasib6</item>
+        <item>Kolasib7</item>
+        <item>Kolasib8</item>
     </string-array>
-
-
     <string-array name="Aizawl">
-        <item>Aizawl_Veng1</item>
-        <item>Aizawl_Veng2</item>
+        <item>Aizawl1</item>
+        <item>Aizawl2</item>
+        <item>Aizawl4</item>
+        <item>Aizawl5</item>
+        <item>Aizawl6</item>
+        <item>Aizawl7</item>
+        <item>Aizawl8</item>
     </string-array>
-
     <string-array name="Champhai">
-        <item>Champhai_Veng1</item>
-        <item>Champhai_Veng2</item>
+        <item>Champhai1</item>
+        <item>Champhai2</item>
+        <item>Champhai3</item>
+        <item>Champhai4</item>
+        <item>Champhai5</item>
+        <item>Champhai6</item>
+        <item>Champhai7</item>
+        <item>Champhai8</item>
     </string-array>
-
-
     <string-array name="Serchhip">
-        <item>Serchhip_Veng1</item>
-        <item>Serchhip_Veng2</item>
+        <item>Serchhip1</item>
+        <item>Serchhip2</item>
+        <item>Serchhip3</item>
+        <item>Serchhip4</item>
+        <item>Serchhip5</item>
+        <item>Serchhip6</item>
+        <item>Serchhip7</item>
+        <item>Serchhip8</item>
     </string-array>
-
-
     <string-array name="Lunglei">
-        <item>Lunglei_Veng1</item>
-        <item>Lunglei_Veng2</item>
+        <item>Lunglei1</item>
+        <item>Lunglei2</item>
+        <item>Lunglei3</item>
+        <item>Lunglei4</item>
+        <item>Lunglei5</item>
+        <item>Lunglei6</item>
+        <item>Lunglei7</item>
+        <item>Lunglei8</item>
     </string-array>
+
     <string-array name="Lawngtlai">
-        <item>Lawngtlai_Veng1</item>
-        <item>Lawngtlai_Veng2</item>
+        <item>Lawngtlai1</item>
+        <item>Lawngtlai2</item>
+        <item>Lawngtlai3</item>
+        <item>Lawngtlai4</item>
+        <item>Lawngtlai</item>
+        <item>Lawngtlai6</item>
+        <item>Lawngtlai7</item>
+        <item>Lawngtlai8</item>
     </string-array>
-
-
     <string-array name="Siaha">
-        <item>Siaha_Veng1</item>
-        <item>Siaha_Veng2</item>
+        <item>Siaha1</item>
+        <item>Siaha2</item>
+        <item>Siaha3</item>
+        <item>Siaha4</item>
+        <item>Siaha5</item>
+        <item>Siaha6</item>
+        <item>Siaha7</item>
+        <item>Siaha8</item>
     </string-array>
 
 
+    <string-array name="disasterType">
+        <item>disaster type 1</item>
+        <item>disaster type 2</item>
+        <item>disaster type 3</item>
+        <item>disaster type 4</item>
+        <item>disaster type 5</item>
+        <item>etc...</item>
+
+    </string-array>
 </resources>

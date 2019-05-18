@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -20,6 +22,7 @@ import com.koushikdutta.ion.Ion;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.Entity.Officer;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.Entity.Relief;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.Entity.User;
+import com.lalthanpuiachhangte.mizoramdisastermanagement.MainActivity;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.R;
 
 import java.text.DateFormat;
@@ -31,16 +34,21 @@ import static com.lalthanpuiachhangte.mizoramdisastermanagement.AfterLogin.Dashb
 
 public class ReliefFormActivity extends AppCompatActivity {
 
-    EditText detailsET;
-    EditText landmarksET;
-    EditText materialET;
-    EditText quantityET;
+    AutoCompleteTextView materialET;
     Spinner districtSpinner;
     Spinner localitySpinner;
+    EditText detailsET;
+    EditText landmarksET;
+    EditText quantityET;
+    EditText disasterDetailsET;
+
     Button reliefButton;
 
     Officer mOfficer = new Officer();
     Relief mReleif = new Relief();
+
+    public String tempDistrict;
+    public String tempLocality;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,45 +58,85 @@ public class ReliefFormActivity extends AppCompatActivity {
         Intent intent = getIntent();
      //  User mUser = (User) intent.getSerializableExtra("mUser");
 
-        detailsET = findViewById(R.id.details);
+     //   detailsET = findViewById(R.id.details);
         landmarksET = findViewById(R.id.landmarks);
         materialET = findViewById(R.id.material);
         quantityET = findViewById(R.id.quantity);
 
+        disasterDetailsET = findViewById(R.id.disasterDetails);
         districtSpinner = findViewById(R.id.district);
         localitySpinner = findViewById(R.id.locality);
 
+
         reliefButton = findViewById(R.id.requestReliefButton);
 
+        //AUTO COMPLETE TEXTVIEW
+        //1. Material Request
+        String[] countries = getResources().getStringArray(R.array.material_lists);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,countries);
+        materialET.setAdapter(adapter);
+
+        //2. District
         ArrayAdapter<CharSequence> districtAdapter = ArrayAdapter.createFromResource(this,R.array.district,android.R.layout.simple_spinner_dropdown_item);
-
-        ArrayAdapter<CharSequence> mamitAdapter = ArrayAdapter.createFromResource(this,R.array.Mamit,android.R.layout.simple_spinner_dropdown_item);
-        ArrayAdapter<CharSequence> kolasibAdapter = ArrayAdapter.createFromResource(this,R.array.Kolasib,android.R.layout.simple_spinner_dropdown_item);
-        ArrayAdapter<CharSequence> aizawlAdapter = ArrayAdapter.createFromResource(this,R.array.Aizawl,android.R.layout.simple_spinner_dropdown_item);
-        ArrayAdapter<CharSequence> champhaiAdapter = ArrayAdapter.createFromResource(this,R.array.Champhai,android.R.layout.simple_spinner_dropdown_item);
-        ArrayAdapter<CharSequence> lungleiAdapter = ArrayAdapter.createFromResource(this,R.array.Lunglei,android.R.layout.simple_spinner_dropdown_item);
-        ArrayAdapter<CharSequence> lawngtlaiAdapter = ArrayAdapter.createFromResource(this,R.array.Lawngtlai,android.R.layout.simple_spinner_dropdown_item);
-        ArrayAdapter<CharSequence> siahaAdapter = ArrayAdapter.createFromResource(this,R.array.Siaha,android.R.layout.simple_spinner_dropdown_item);
-
-        districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         districtSpinner.setAdapter(districtAdapter);
 
-        localitySpinner.setAdapter(mamitAdapter);
+        //CHANGE THE LOCALITY DYNAMICALLY WITH DISTRICT
+        //3. Locality /Village
+
+        districtSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                tempDistrict = districtSpinner.getSelectedItem().toString();
+                ArrayAdapter<CharSequence> localityAdapter = null;
+                
+                if(tempDistrict.equals("Mamit")) {
+                    localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.Mamit, android.R.layout.simple_spinner_dropdown_item);
+                }else if (tempDistrict.equals("Kolasib")){
+                    localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Kolasib,android.R.layout.simple_spinner_dropdown_item);
+                } else if (tempDistrict.equals("Aizawl")){
+                    localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Aizawl,android.R.layout.simple_spinner_dropdown_item);
+                } else if (tempDistrict.equals("Champhai")){
+                    localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Champhai,android.R.layout.simple_spinner_dropdown_item);
+                }else if (tempDistrict.equals("Serchhip")){
+                    localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Serchhip,android.R.layout.simple_spinner_dropdown_item);
+                }else if (tempDistrict.equals("Lunglei")){
+                    localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Lunglei,android.R.layout.simple_spinner_dropdown_item);
+                } else if (tempDistrict.equals("Lawngtlai")){
+                    localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Lawngtlai,android.R.layout.simple_spinner_dropdown_item);
+                } else if (tempDistrict.equals("Siaha")){
+                    localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Siaha,android.R.layout.simple_spinner_dropdown_item);
+                }
+
+                localitySpinner.setAdapter(localityAdapter);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+       // districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
 
     }
 
     public void requestReliefClick(View view) {
+        //reliefButton.setEnabled(false);
         reliefButton.setVisibility(View.GONE);
         //1.GET THE DATA
         //1.1 Get From The User Populate
-        String tempDetails =    String.valueOf(detailsET.getText());
         String tempLandmarks =  String.valueOf(landmarksET.getText());
         String tempMaterial =       String.valueOf(materialET.getText());
         String tempQuantity =       String.valueOf(quantityET.getText());
+        String tempDetails = String.valueOf(disasterDetailsET.getText());
+        tempLocality = localitySpinner.getSelectedItem().toString();
 
-        String tempDistrict = districtSpinner.getSelectedItem().toString();
-        String tempLocality = localitySpinner.getSelectedItem().toString();
+//        String tempDistrict = "";//districtET.getSelectedItem().toString();
+//        String tempLocality = "";//localityET.getSelectedItem().toString();
 
         //1.2 Get From the Shared Preferences
         String sharedPreferenceUsername = mUser.getUsername();
@@ -105,18 +153,21 @@ public class ReliefFormActivity extends AppCompatActivity {
 
         //ONLY BOTH ARE FILLED
         if(!tempDistrict.equals("") && !tempLocality.equals("")){
-            String url = "http://10.180.243.3:8080/test/" + tempLocality;
+            String url = MainActivity.ipAddress+ "/test/" + tempLocality;
             Ion.with(this)
                     .load(url)
                     .as(new TypeToken<Officer>(){})
                     .setCallback(new FutureCallback<Officer>() {
                         @Override
                         public void onCompleted(Exception e, Officer result) {
-                           // if(result==null){
-                           //     Toast.makeText(getApplicationContext(),"locality may not be maaping in the db",Toast.LENGTH_SHORT).show();
+                            if(result==null){
+                                Toast.makeText(getApplicationContext(),"locality may not be maaping in the db",Toast.LENGTH_SHORT).show();
+                               // reliefButton.setEnabled(true);
 
-                           // }
-                            //else{
+                             //   reliefButton.setVisibility(View.VISIBLE);
+
+                            }
+                            else{
                                  String tempZonalOfficerName = result.getOfficerName();
                                  String tempZonalOfficerContact = result.getOfficerContact();
 
@@ -125,11 +176,13 @@ public class ReliefFormActivity extends AppCompatActivity {
                                // mReleif.setZonalOfficerId();
                                 mReleif.setOfficerName(tempZonalOfficerName);
                                // mReleif.setZoneId();
-                        //    }
+                           }
                         }
                     });
         }else{
+           // reliefButton.setEnabled(true);
             reliefButton.setVisibility(View.VISIBLE);
+
         }
 
         //CREATE A NEW OBJECT WITH RELIEF ENTITY
@@ -152,10 +205,11 @@ public class ReliefFormActivity extends AppCompatActivity {
      //the zonal officer details are populate above
 
 
+        String url = MainActivity.ipAddress + "/post/relief";
 
         //UPLOADING THE RELIEF REQUEST FORM
         Ion.with(this)
-                .load("http://10.180.243.3:8080/post/relief")
+                .load(url)
                 .setJsonPojoBody(mReleif)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
@@ -167,9 +221,14 @@ public class ReliefFormActivity extends AppCompatActivity {
                         reliefButton.setVisibility(View.VISIBLE);
 
                         Toast.makeText(getApplicationContext(),"Successfully sent", Toast.LENGTH_SHORT).show();
+
+                        //clear the fields
+                        materialET.setText("");
+                        quantityET.setText("");
+                        landmarksET.setText("");
+                        disasterDetailsET.setText("");
                     }
                 });
 
-        reliefButton.setVisibility(View.VISIBLE);
     }
 }

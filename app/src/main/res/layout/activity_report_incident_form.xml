@@ -6,56 +6,111 @@
     android:layout_height="match_parent"
     tools:context=".AfterLogin.ReportIncidentFormActivity"
     android:orientation="vertical"
-    android:gravity="center">
+    android:padding="30dp">
 
 
-    <TextView
+    <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Incident Report form"
-        android:textSize="27dp"/>
-
-    <EditText
-        android:id="@+id/disasterType"
-        android:hint="Disaster Type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:text="Are you currnetly in the location?"/>
 
 
-    <EditText
-        android:id="@+id/status"
-        android:hint="Status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
-
-    <EditText
-        android:id="@+id/disasterDetails"
-        android:hint="Disaster Details"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <Spinner
-        android:id="@+id/district"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
-    <Spinner
-        android:id="@+id/locality"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <EditText
-        android:id="@+id/landmarks"
-        android:hint="Landmarks"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Type of disaster"/>
+        <Spinner
+            android:id="@+id/disasterType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter your district"/>
+        <Spinner
+            android:id="@+id/district"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter your locality/village"/>
+        <Spinner
+            android:id="@+id/locality"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/landmarks"
+            android:hint="Enter landmarks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/disasterDetails"
+            android:hint="Enter disaster details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </android.support.design.widget.TextInputLayout>
 
     <Button
-        android:id="@+id/incidentReportButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Submit Request Relief"
-        android:onClick="incidentReportClick"/>
+        android:text="Add photo"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:gravity="bottom">
+
+        <Button
+            android:id="@+id/incidentReportButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:onClick="incidentReportClick"
+            android:textColor="#E7E3E3"
+            android:background="@color/colorPrimaryDark"/>
+
+    </LinearLayout>
+
+
 
 
 </LinearLayout>

@@ -24,7 +24,6 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         requestWindowFeature(Window.FEATURE_NO_TITLE); getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_dashboard);
         //GET THE SHARE PREFERENCE OF THE USERDETAILS
@@ -32,9 +31,6 @@ public class DashboardActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String json = sharedPreferences.getString("userObject","");
         mUser = gson.fromJson(json, User.class);
-
-
-
     }
 
     public void requestReliefClick(View view) {
@@ -49,8 +45,6 @@ public class DashboardActivity extends AppCompatActivity {
         //xintent.putExtra("mUser", mUser);
         startActivity(intent);
     }
-
-
 
     public void signoutClick(View view) {
 

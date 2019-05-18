@@ -6,70 +6,126 @@
     android:layout_height="match_parent"
     tools:context=".AfterLogin.DashboardActivity"
     android:orientation="vertical"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/tempColor">
 
 
-    <TextView
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:text="Dashboard"
-        android:textSize="32dp"
-        android:textColor="@color/textOffWhite"
-        android:background="@drawable/gradient"
+        android:layout_height="170dp"
+        android:background="@drawable/dcoffice"
         android:gravity="center"
-
-        />
+        android:text="Dashboadsfgrd"
+        android:textSize="32dp" />
 
     <GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:columnCount="3"
         android:orientation="horizontal"
-        android:rowCount="3"
-        android:layout_gravity="center"
-        >
-
+        android:rowCount="3">
 
         <Button
             android:id="@+id/incidentReportButton"
             android:layout_width="@dimen/buttonWidth"
             android:layout_height="@dimen/buttonHeight"
-            android:onClick="incidentReportClick"
-            android:text="Incident Report"
             android:layout_gravity="center"
-            android:backgroundTint="@color/buttonColor"
-            android:textColor="@color/textOffWhite"
+            android:drawableTop="@drawable/ic_team2"
+            android:text="My Zonal Officer"
+            android:textAllCaps="false"
+
             />
 
         <Button
             android:id="@+id/requestReliefButton"
             android:layout_width="@dimen/buttonWidth"
             android:layout_height="@dimen/buttonHeight"
+            android:layout_gravity="center"
+            android:drawableTop="@drawable/ic_teamwork"
             android:onClick="requestReliefClick"
             android:text="Request Relief"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/buttonColor"
-            android:textColor="@color/textOffWhite"/>
+            android:textAllCaps="false"
 
-        <Button
+            />
 
-            android:layout_width="@dimen/buttonWidth"
-            android:layout_height="@dimen/buttonHeight"
-            android:text="Nothing"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/buttonColor"
-            android:textColor="@color/textOffWhite"/>
 
         <Button
             android:id="@+id/signoutButton"
             android:layout_width="@dimen/buttonWidth"
             android:layout_height="@dimen/buttonHeight"
-            android:onClick="signoutClick"
-            android:text="sign out"
             android:layout_gravity="center"
-            android:backgroundTint="@color/buttonColor"
-            android:textColor="@color/textOffWhite"/>
+            android:drawableTop="@drawable/ic_email_home"
+            android:text="Notifications"
+            android:textAllCaps="false"
+
+            />
 
 
+        <Button
+            android:id="@+id/one"
+            android:layout_width="@dimen/buttonWidth"
+            android:layout_height="@dimen/buttonHeight"
+            android:layout_gravity="center"
+            android:drawableTop="@drawable/ic_analytics_1_home"
+            android:onClick="incidentReportClick"
+            android:text="Report Incident"
+            android:textAllCaps="false"
+
+            />
+
+        <Button
+            android:id="@+id/two"
+            android:layout_width="@dimen/buttonWidth"
+            android:layout_height="@dimen/buttonHeight"
+            android:layout_gravity="center"
+            android:drawableTop="@drawable/ic_information_home"
+            android:text="Important Contact"
+            android:textAllCaps="false" />
+
+
+        <Button
+            android:id="@+id/three"
+            android:layout_width="@dimen/buttonWidth"
+            android:layout_height="@dimen/buttonHeight"
+            android:layout_gravity="center"
+            android:drawableTop="@drawable/ic_map"
+            android:text="Resource Mapping"
+            android:textAllCaps="false"
+
+            />
+
+        <Button
+            android:id="@+id/four"
+            android:layout_width="@dimen/buttonWidth"
+            android:layout_height="@dimen/buttonHeight"
+            android:layout_gravity="center"
+            android:drawableTop="@drawable/ic_cardiogram_home"
+            android:text="Rescue Me"
+            android:textAllCaps="false"
+
+            />
+
+        <Button
+            android:id="@+id/five"
+            android:layout_width="@dimen/buttonWidth"
+            android:layout_height="@dimen/buttonHeight"
+            android:layout_gravity="center"
+            android:drawableTop="@drawable/ic_smartphone_home"
+            android:text="Call DEOC"
+            android:textAllCaps="false"
+
+            />
+
+
+        <Button
+            android:id="@+id/six"
+            android:layout_width="@dimen/buttonWidth"
+            android:layout_height="@dimen/buttonHeight"
+            android:layout_gravity="center"
+            android:drawableTop="@drawable/ic_checked"
+            android:text="Dos and Donts"
+            android:textAllCaps="false"
+            />
     </GridLayout>
+
 </LinearLayout>
