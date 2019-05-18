@@ -95,13 +95,14 @@
             />
 
         <Button
-            android:id="@+id/four"
+            android:id="@+id/rescueMeButton"
             android:layout_width="@dimen/buttonWidth"
             android:layout_height="@dimen/buttonHeight"
             android:layout_gravity="center"
             android:drawableTop="@drawable/ic_cardiogram_home"
             android:text="Rescue Me"
             android:textAllCaps="false"
+            android:onClick="rescueClick"
 
             />
 
