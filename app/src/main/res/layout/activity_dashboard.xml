@@ -117,15 +117,15 @@
 
             />
 
-
         <Button
             android:id="@+id/six"
             android:layout_width="@dimen/buttonWidth"
             android:layout_height="@dimen/buttonHeight"
             android:layout_gravity="center"
             android:drawableTop="@drawable/ic_checked"
-            android:text="Dos and Donts"
+            android:text="Sign out"
             android:textAllCaps="false"
+            android:onClick="signoutClick"
             />
     </GridLayout>
 

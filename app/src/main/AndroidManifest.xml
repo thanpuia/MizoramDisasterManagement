@@ -12,9 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AfterLogin.ReportIncidentFormActivity"></activity>
+        <activity android:name=".RegistrationActivity"></activity>
+        <activity android:name=".AfterLogin.ReportIncidentFormActivity" />
         <activity android:name=".AfterLogin.ReliefFormActivity" />
-        <activity android:name=".AfterLogin.DashboardActivity"/>
+        <activity android:name=".AfterLogin.DashboardActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,4 +26,3 @@
     </application>
 
 </manifest>
-

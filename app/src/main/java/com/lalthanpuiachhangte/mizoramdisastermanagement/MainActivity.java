@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     EditText usernameET,passwordET;
     Button loginButton;
-    public final static String ipAddress = "http://10.180.243.23:8080";
+    public final static String ipAddress = "http://10.180.243.2:8080";
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor prefEditor;
@@ -47,10 +47,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
-
-
-   // }
-
+    //
     public void LoginClick(View view) {
 
         loginButton.setVisibility(View.INVISIBLE);
@@ -105,5 +102,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void SignUp(View view) {
 
+        Intent intent = new Intent(this, RegistrationActivity.class);
+        startActivity(intent);
+    }
 }
