@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     EditText usernameET,passwordET;
     Button loginButton;
-    public final static String ipAddress = "http://10.180.243.2:8080";
+    public final static String ipAddress = "http://10.180.243.9:8080";
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor prefEditor;
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
-    //
+
     public void LoginClick(View view) {
 
         loginButton.setVisibility(View.INVISIBLE);
@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
 
                             if(result==null){
                                 Toast.makeText(getApplicationContext(),"incorrect",Toast.LENGTH_SHORT).show();
-
                             }
                             else{
                                 //PUT THE USER DATA IN SHARED PREFERENCE
@@ -82,26 +81,20 @@ public class MainActivity extends AppCompatActivity {
                                 prefEditor.putString("password",password);
                                 prefEditor.commit();
 
-
                                 Toast.makeText(getApplicationContext(),"Login",Toast.LENGTH_SHORT).show();
 
                                 Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
                                 startActivity(intent);
                             }
                             loginButton.setVisibility(View.VISIBLE);
-
                         }
 
 
                     });
         }else{
             loginButton.setVisibility(View.VISIBLE);
-
         }
-
     }
-
-
     public void SignUp(View view) {
 
         Intent intent = new Intent(this, RegistrationActivity.class);

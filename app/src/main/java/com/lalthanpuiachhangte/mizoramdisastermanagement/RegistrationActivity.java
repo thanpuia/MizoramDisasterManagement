@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -14,6 +15,12 @@ import android.widget.Toast;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
+import com.lalthanpuiachhangte.mizoramdisastermanagement.Entity.User;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -29,10 +36,12 @@ public class RegistrationActivity extends AppCompatActivity {
     Spinner district;
     Spinner locality;
     CheckBox volunteer;
+    Button registrationButton;
 
 
     public String tempDistrict;
     public String tempLocality;
+    public User mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +60,9 @@ public class RegistrationActivity extends AppCompatActivity {
         district = findViewById(R.id.district);
         locality = findViewById(R.id.locality);
         volunteer = findViewById(R.id.volunteerWithUs);
+        registrationButton = findViewById(R.id.registrationButton);
+
+
 
         //2. District
         ArrayAdapter<CharSequence> districtAdapter = ArrayAdapter.createFromResource(this,R.array.district,android.R.layout.simple_spinner_dropdown_item);
@@ -91,35 +103,53 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
-                //get the datas and push to the object
-                String tempUsername = username.getText().toString();
-                String tempPhonenumber = phoneNumber.getText().toString();
-                String tempEmail = phoneNumber.getText().toString();
-                String tempPassword = password.getText().toString();
-                String tempConfirmPassword = confirmPassword.getText().toString();
-                String tempAlternateContactName = alternateName.getText().toString();
-                String tempAlternateContactNumber = alternateNumber.getText().toString();
-                String tempEmergencyContactName = emergencyContactName.getText().toString();
-                String tempEmergencyContactNumber = emergencyContactNumber.getText().toString();
-
-                Boolean volunteerBool = volunteer.isChecked();
-
-
-                //uploading
-                uploading();
             }
         });
-
     }
 
-    public void uploading() {
+    public void RegistrationClick(View view) {
 
-        String url = MainActivity.ipAddress + "/post/relief";
+        registrationButton.setVisibility(View.GONE);
+
+        //GET THE DATA AND PUSH TO THE OBJECT
+        mUser = new User();
+        mUser.setUsername(username.getText().toString());
+        mUser.setPhoneNo(phoneNumber.getText().toString());
+        mUser.setEmail(email.getText().toString());
+        mUser.setPassword(password.getText().toString());
+        mUser.setAltContactName(alternateName.getText().toString());
+        mUser.setAltContactNo(alternateNumber.getText().toString());
+        mUser.setEmergencyContactName(emergencyContactName.getText().toString());
+        mUser.setEmergencyContactNo(emergencyContactNumber.getText().toString());
+        mUser.setDistrict(tempDistrict);
+        mUser.setLocality(tempLocality);
+
+        if(volunteer.isChecked())
+            mUser.setVolunteer("yes");
+        else
+            mUser.setVolunteer("no");
+
+        //GET THE CURRENT TIME
+        Calendar cal = Calendar.getInstance();
+        Date date=cal.getTime();
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss, dd-MM-yyyy");
+        String mCurrentTime=dateFormat.format(date);
+        System.out.println("Current time of the day using Calendar - 24 hour format: "+ mCurrentTime);
+
+        mUser.setCreatedAt(mCurrentTime);
+
+        //uploading
+        uploading(mUser);
+    }
+
+    public void uploading(User mUser) {
+
+        String url = MainActivity.ipAddress + "/test/newUser";
 
         //UPLOADING THE RELIEF REQUEST FORM
         Ion.with(this)
                 .load(url)
-                .setJsonPojoBody(mReleif)
+                .setJsonPojoBody(mUser)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
@@ -127,19 +157,17 @@ public class RegistrationActivity extends AppCompatActivity {
                         // do stuff with the result or error
                         Log.i("JSON Response","Result: "+result);
 
-                        reliefButton.setVisibility(View.VISIBLE);
+                        registrationButton.setVisibility(View.VISIBLE);
 
                         Toast.makeText(getApplicationContext(),"Successfully sent", Toast.LENGTH_SHORT).show();
-
-                        //clear the fields
-                        materialET.setText("");
-                        quantityET.setText("");
-                        landmarksET.setText("");
-                        disasterDetailsET.setText("");
+//
+//                        //clear the fields
+//                        materialET.setText("");
+//                        quantityET.setText("");
+//                        landmarksET.setText("");
+//                        disasterDetailsET.setText("");
                     }
                 });
     }
-
-
 
 }
