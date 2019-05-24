@@ -36,7 +36,9 @@ public class ReliefFormActivity extends AppCompatActivity {
 
     AutoCompleteTextView materialET;
     Spinner districtSpinner;
-    Spinner localitySpinner;
+    //Spinner localitySpinner;
+    AutoCompleteTextView locality;
+
     EditText detailsET;
     EditText landmarksET;
     EditText quantityET;
@@ -65,10 +67,33 @@ public class ReliefFormActivity extends AppCompatActivity {
 
         disasterDetailsET = findViewById(R.id.disasterDetails);
         districtSpinner = findViewById(R.id.district);
-        localitySpinner = findViewById(R.id.locality);
-
+       // localitySpinner = findViewById(R.id.locality);
+        locality = findViewById(R.id.locality);
 
         reliefButton = findViewById(R.id.requestReliefButton);
+
+
+
+
+        //LOCALITY EDIT TEXT
+  /*      String[] ProgLanguages = { "Java", "C", "C++", ".Net", "PHP", "Perl",
+                "Objective-c", "Small-Talk", "C#", "Ruby", "ASP", "ASP .NET" };
+        autoTextView = (AutoCompleteTextView) findViewById(R.id.autocompleteEditTextView);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.select_dialog_item, ProgLanguages);
+        //Used to specify minimum number of
+        //characters the user has to type in order to display the drop down hint.
+        autoTextView.setThreshold(1);
+        //Setting adapter
+        autoTextView.setAdapter(arrayAdapter);
+*/
+
+        //ArrayAdapter<String> localityAdapter = new ArrayAdapter<>(this,android.R.layout.select_dialog_item,R.array.locality);
+        ArrayAdapter<CharSequence> localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.locality,android.R.layout.select_dialog_item);
+        locality.setThreshold(1);
+        locality.setAdapter(localityAdapter);
+
+
 
         //AUTO COMPLETE TEXTVIEW
         //1. Material Request
@@ -83,40 +108,41 @@ public class ReliefFormActivity extends AppCompatActivity {
         //CHANGE THE LOCALITY DYNAMICALLY WITH DISTRICT
         //3. Locality /Village
 
-        districtSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                tempDistrict = districtSpinner.getSelectedItem().toString();
-                ArrayAdapter<CharSequence> localityAdapter = null;
-                
-                if(tempDistrict.equals("Mamit")) {
-                    localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.Mamit, android.R.layout.simple_spinner_dropdown_item);
-                }else if (tempDistrict.equals("Kolasib")){
-                    localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Kolasib,android.R.layout.simple_spinner_dropdown_item);
-                } else if (tempDistrict.equals("Aizawl")){
-                    localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Aizawl,android.R.layout.simple_spinner_dropdown_item);
-                } else if (tempDistrict.equals("Champhai")){
-                    localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Champhai,android.R.layout.simple_spinner_dropdown_item);
-                }else if (tempDistrict.equals("Serchhip")){
-                    localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Serchhip,android.R.layout.simple_spinner_dropdown_item);
-                }else if (tempDistrict.equals("Lunglei")){
-                    localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Lunglei,android.R.layout.simple_spinner_dropdown_item);
-                } else if (tempDistrict.equals("Lawngtlai")){
-                    localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Lawngtlai,android.R.layout.simple_spinner_dropdown_item);
-                } else if (tempDistrict.equals("Siaha")){
-                    localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Siaha,android.R.layout.simple_spinner_dropdown_item);
-                }
-
-                localitySpinner.setAdapter(localityAdapter);
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+//
+//        districtSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//
+//                tempDistrict = districtSpinner.getSelectedItem().toString();
+//                ArrayAdapter<CharSequence> localityAdapter = null;
+//
+//                if(tempDistrict.equals("Mamit")) {
+//                    localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.Mamit, android.R.layout.simple_spinner_dropdown_item);
+//                }else if (tempDistrict.equals("Kolasib")){
+//                    localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Kolasib,android.R.layout.simple_spinner_dropdown_item);
+//                } else if (tempDistrict.equals("Aizawl")){
+//                    localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Aizawl,android.R.layout.simple_spinner_dropdown_item);
+//                } else if (tempDistrict.equals("Champhai")){
+//                    localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Champhai,android.R.layout.simple_spinner_dropdown_item);
+//                }else if (tempDistrict.equals("Serchhip")){
+//                    localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Serchhip,android.R.layout.simple_spinner_dropdown_item);
+//                }else if (tempDistrict.equals("Lunglei")){
+//                    localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Lunglei,android.R.layout.simple_spinner_dropdown_item);
+//                } else if (tempDistrict.equals("Lawngtlai")){
+//                    localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Lawngtlai,android.R.layout.simple_spinner_dropdown_item);
+//                } else if (tempDistrict.equals("Siaha")){
+//                    localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Siaha,android.R.layout.simple_spinner_dropdown_item);
+//                }
+//
+//                localitySpinner.setAdapter(localityAdapter);
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
 
 
        // districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -133,7 +159,7 @@ public class ReliefFormActivity extends AppCompatActivity {
         String tempMaterial =       String.valueOf(materialET.getText());
         String tempQuantity =       String.valueOf(quantityET.getText());
         String tempDetails = String.valueOf(disasterDetailsET.getText());
-        tempLocality = localitySpinner.getSelectedItem().toString();
+        tempLocality = locality.getText().toString();
 
 //        String tempDistrict = "";//districtET.getSelectedItem().toString();
 //        String tempLocality = "";//localityET.getSelectedItem().toString();
@@ -150,9 +176,9 @@ public class ReliefFormActivity extends AppCompatActivity {
         System.out.println("Current time of the day using Calendar - 24 hour format: "+ mCurrentTime);
 
         //.1.4 Get The Zonal Officer Data
-
+/*
         //ONLY BOTH ARE FILLED
-        if(!tempDistrict.equals("") && !tempLocality.equals("")){
+      //  if(!tempDistrict.equals("")){
             String url = MainActivity.ipAddress+ "/test/" + tempLocality;
             Ion.with(this)
                     .load(url)
@@ -178,12 +204,11 @@ public class ReliefFormActivity extends AppCompatActivity {
                                // mReleif.setZoneId();
                            }
                         }
-                    });
-        }else{
+                    });*/
+      //  }else{
            // reliefButton.setEnabled(true);
-            reliefButton.setVisibility(View.VISIBLE);
-
-        }
+        //    reliefButton.setVisibility(View.VISIBLE);
+      //  }
 
         //CREATE A NEW OBJECT WITH RELIEF ENTITY
 
@@ -205,11 +230,11 @@ public class ReliefFormActivity extends AppCompatActivity {
      //the zonal officer details are populate above
 
 
-        String url = MainActivity.ipAddress + "/post/relief";
+        String url2 = MainActivity.ipAddress + "/post/relief/";
 
         //UPLOADING THE RELIEF REQUEST FORM
         Ion.with(this)
-                .load(url)
+                .load(url2)
                 .setJsonPojoBody(mReleif)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {

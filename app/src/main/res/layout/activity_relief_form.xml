@@ -50,14 +50,19 @@
             android:layout_height="wrap_content" />
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Enter locality"/>
-        <Spinner
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <AutoCompleteTextView
             android:id="@+id/locality"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:hint="Enter locality"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+
 
 
     <android.support.design.widget.TextInputLayout

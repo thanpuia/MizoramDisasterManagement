@@ -19,9 +19,10 @@ import com.lalthanpuiachhangte.mizoramdisastermanagement.Entity.User;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText usernameET,passwordET;
+    EditText passwordET;
+    EditText userPhoneNo;
     Button loginButton;
-    public final static String ipAddress = "http://10.180.243.9:8080";
+    public final static String ipAddress = "http://10.180.243.29:8080";
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor prefEditor;
@@ -31,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        usernameET = findViewById(R.id.usernameEt);
+       // usernameET = findViewById(R.id.usernameEt);
+        userPhoneNo = findViewById(R.id.phoneNumberEt);
         passwordET = findViewById(R.id.passwordEt);
         loginButton = findViewById(R.id.loginButton);
 
@@ -53,12 +55,13 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setVisibility(View.INVISIBLE);
 
         //AUTHENTICATE THE USER
-        final String username= String.valueOf(usernameET.getText());
+        //final String username= String.valueOf(usernameET.getText());
+        final String phoneNo= String.valueOf(userPhoneNo.getText());
         final String password = String.valueOf(passwordET.getText());
 
         //ONLY BOTH ARE FILLED
-        if(!username.equals("") && !password.equals("")){
-            String url = ipAddress +"/test/"+username+"/"+password;
+        if(!phoneNo.equals("") && !password.equals("")){
+            String url = ipAddress +"/test/"+phoneNo+"/"+password;
             Ion.with(this)
                     .load(url)
                     .as(new TypeToken<User>(){})
@@ -77,7 +80,8 @@ public class MainActivity extends AppCompatActivity {
                                 prefEditor.putString("userObject", json);
 
                                 //SAVE THE USER CREDENTIALS
-                                prefEditor.putString("username",username);
+                                //prefEditor.putString("username",username);
+                                prefEditor.putString("phoneNo",phoneNo);
                                 prefEditor.putString("password",password);
                                 prefEditor.commit();
 

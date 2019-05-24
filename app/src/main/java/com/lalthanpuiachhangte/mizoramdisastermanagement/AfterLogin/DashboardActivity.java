@@ -100,7 +100,7 @@ public class DashboardActivity extends AppCompatActivity {
         prefEditor = sharedPreferences.edit();
         //CLEAR EVERYTHING
         prefEditor.putString("userObject","");
-        prefEditor.putString("username","");
+        prefEditor.putString("phoneNo","");
         prefEditor.putString("password","");
         prefEditor.commit();
 

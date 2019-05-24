@@ -104,4 +104,86 @@
         <item>etc...</item>
 
     </string-array>
+
+    <string-array name="locality">
+        <item>Chaltlang</item>
+        <item>Durtlang</item>
+        <item>Durtlang Leitan</item>
+        <item>Durtlang North</item>
+        <item>Selesih</item>
+        <item>Chanmari West</item>
+        <item>Edenthar</item>
+        <item>Chaltlang Lily Veng</item>
+        <item>Bawngkawn</item>
+        <item>Thuampui</item>
+        <item>Zuangtui</item>
+        <item>Muanna Veng</item>
+        <item>Bawngkawn South</item>
+        <item>Zemabawk</item>
+        <item>Zemabawk North</item>
+        <item>Falkland</item>
+        <item>Electric Veng</item>
+        <item>Aizawl Venglai</item>
+        <item>Ramhlun</item>
+        <item>Ramhlun Sports Complex</item>
+        <item>Ramhlun South</item>
+        <item>Ramhlun North</item>
+        <item>Ramhlun Vengthar</item>
+        <item>Ramhlun Venglai</item>
+        <item>Ramthar</item>
+        <item>Tuithiang</item>
+        <item>Chhinga Veng</item>
+        <item>Zarkawt</item>
+        <item>Dawrpui</item>
+        <item>Chanmari West</item>
+        <item>Saron Veng</item>
+        <item>Armed Veng</item>
+        <item>Armed Veng South</item>
+        <item>Chite</item>
+        <item>Tuikual South</item>
+        <item>Tuikual North</item>
+        <item>Dinthar</item>
+        <item>Dawrpui Vengthar</item>
+        <item>Chawnpui</item>
+        <item>Kanan</item>
+        <item>Zotlang</item>
+        <item>Hunthar</item>
+        <item>Vaivakawn</item>
+        <item>Rangvamual</item>
+        <item>Phunchawng</item>
+        <item>Tuivamit</item>
+        <item>Sakawrtuichhun</item>
+        <item>Chawlhhmun</item>
+        <item>Luangmual</item>
+        <item>Tanhril</item>
+        <item>Govt. Complex</item>
+        <item>Zonuam</item>
+        <item>Upper Republi</item>c
+        <item>Republic</item>
+        <item>Republic Vengthlang</item>
+        <item>Venghlui</item>
+        <item>College Veng</item>
+        <item>Bethlehem</item>
+        <item>Bethlehem Vengthlang</item>
+        <item>ITI Veng</item>
+        <item>Bungkawn Vengthar</item>
+        <item>Maubawk</item>
+        <item>Bungkawn</item>
+        <item>Khatla</item>
+        <item>Khatla South</item>
+        <item>Khatla East</item>
+        <item>Nursery Veng</item>
+        <item>Lawipu</item>
+        <item>New Secretariat Complex</item>
+        <item>Venghnuai</item>
+        <item>Dam Veng</item>
+        <item>Salem Veng</item>
+        <item>Mission Veng</item>
+        <item>Mission Vengthlang</item>
+        <item>Model Veng</item>
+        <item>Tuikhuahtlang</item>
+    </string-array>
+
 </resources>
+
+
