@@ -33,6 +33,7 @@
             android:drawableTop="@drawable/ic_team2"
             android:text="My Zonal Officer"
             android:textAllCaps="false"
+            android:onClick="zonalOfficerClick"
 
             />
 
@@ -92,6 +93,7 @@
             android:text="Resource Mapping"
             android:textAllCaps="false"
 
+            android:onClick="mapClick"
             />
 
         <Button

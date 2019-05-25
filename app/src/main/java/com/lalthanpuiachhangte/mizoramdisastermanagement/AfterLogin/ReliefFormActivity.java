@@ -2,6 +2,7 @@ package com.lalthanpuiachhangte.mizoramdisastermanagement.AfterLogin;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +31,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import io.nlopez.smartlocation.OnLocationUpdatedListener;
+import io.nlopez.smartlocation.SmartLocation;
+
 import static com.lalthanpuiachhangte.mizoramdisastermanagement.AfterLogin.DashboardActivity.mUser;
 
 public class ReliefFormActivity extends AppCompatActivity {
@@ -51,6 +55,7 @@ public class ReliefFormActivity extends AppCompatActivity {
 
     public String tempDistrict;
     public String tempLocality;
+    Location currentLocation =null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,10 +152,24 @@ public class ReliefFormActivity extends AppCompatActivity {
 
        // districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        //GET THE CURRENT LOCATION
+        SmartLocation.with(getApplicationContext()).location()
+                .oneFix()
+                .start(new OnLocationUpdatedListener() {
+                    @Override
+                    public void onLocationUpdated(Location location) {
+                        //Toast.makeText(context,"Location"+location.getLatitude(),Toast.LENGTH_SHORT).show();
+                      //  mLocation[0] = location;
+                        //Toast.makeText(context,"Location in array"+mLocation[0].getLatitude(),Toast.LENGTH_SHORT).show();
+                        currentLocation = location;
+                    }
+                });
 
     }
 
     public void requestReliefClick(View view) {
+
+        Toast.makeText(getApplicationContext(),"Location in array"+currentLocation.getLatitude(),Toast.LENGTH_SHORT).show();
         //reliefButton.setEnabled(false);
         reliefButton.setVisibility(View.GONE);
         //1.GET THE DATA
@@ -216,8 +235,8 @@ public class ReliefFormActivity extends AppCompatActivity {
         mReleif.setDetails(tempDetails);
         mReleif.setDistrict(tempDistrict);
         mReleif.setLandmarks(tempLandmarks);
-     //   mReleif.setLat();
-     //   mReleif.setLng();
+        mReleif.setLat(String.valueOf(currentLocation.getLatitude()));
+        mReleif.setLng(String.valueOf(currentLocation.getLongitude()));
         mReleif.setLocality(tempLocality);
         mReleif.setMaterial(tempMaterial);
      //   mReleif.setMaterialId();

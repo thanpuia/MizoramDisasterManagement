@@ -1,13 +1,17 @@
 package com.lalthanpuiachhangte.mizoramdisastermanagement.AfterLogin;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,7 +24,11 @@ import com.google.gson.Gson;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.Entity.User;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.MainActivity;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.R;
+import com.lalthanpuiachhangte.mizoramdisastermanagement.location.GetLocation;
 
+import io.nlopez.smartlocation.OnLocationUpdatedListener;
+import io.nlopez.smartlocation.SmartLocation;
+import android.Manifest;
 public class DashboardActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
@@ -35,6 +43,7 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
 
         rescueMeButton = findViewById(R.id.rescueMeButton);
+        checkLocationPermission();
 
         //GET THE SHARE PREFERENCE OF THE USERDETAILS
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -112,5 +121,110 @@ public class DashboardActivity extends AppCompatActivity {
     public void rescueClick(View view) {
         Toast.makeText(this,"Long press to make a call",Toast.LENGTH_SHORT).show();
 
+    }
+
+    public void mapClick(View view) {
+
+
+    }
+
+
+
+    //LOCATION PERMISSION AT RUNTIME
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+
+    public boolean checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+                new AlertDialog.Builder(this)
+                        .setTitle("PERMISSION")
+                        .setMessage("DO YOU ALLOW")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //Prompt the user once explanation has been shown
+                                ActivityCompat.requestPermissions(DashboardActivity.this,
+                                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                        MY_PERMISSIONS_REQUEST_LOCATION);
+                            }
+                        })
+                        .create()
+                        .show();
+
+
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // location-related task you need to do.
+                    if (ContextCompat.checkSelfPermission(this,
+                            Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+
+                        //Request location updates:
+                       // locationManager.requestLocationUpdates(provider, 400, 1, this);
+                    }
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+
+                }
+                return;
+            }
+
+        }
+    }
+
+    public static Location getLocation(final Context context){
+
+        final Location[] mLocation = {null};// = new Location();
+
+        //Toast.makeText(DashboardActivity.class,"GOS: "+ SmartLocation.with(getApplicationContext()).location().state().isGpsAvailable()
+              //  ,Toast.LENGTH_SHORT).show();
+        SmartLocation.with(context).location()
+                .oneFix()
+                .start(new OnLocationUpdatedListener() {
+                    @Override
+                    public void onLocationUpdated(Location location) {
+                        //Toast.makeText(context,"Location"+location.getLatitude(),Toast.LENGTH_SHORT).show();
+                        mLocation[0] = location;
+                        //Toast.makeText(context,"Location in array"+mLocation[0].getLatitude(),Toast.LENGTH_SHORT).show();
+                    }
+                });
+        return mLocation[0];
+    }
+
+    public void zonalOfficerClick(View view) {
+        Intent intent = new Intent(this,ZonalOfficerActivity.class);
+        startActivity(intent);
     }
 }

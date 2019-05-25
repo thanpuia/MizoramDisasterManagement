@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AfterLogin.ZonalOfficerActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="30dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/zonalOfficerHeading"
+            android:textSize="10dp"
+            android:textAlignment="center"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="zawnna"
+            android:textColor="#FFFFFF"
+            android:layout_margin="20dp"
+            android:background="#689F38"
+            android:onClick="zawnnaClick"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="EMAW"
+            android:layout_gravity="center"
+            android:textSize="15dp"
+            android:padding="10dp"
+            android:textStyle="italic"/>
+
+        <AutoCompleteTextView
+            android:id="@+id/addressName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="I veng hming thun rawh"
+            android:textAlignment="center"/>
+
+
+        <LinearLayout
+            android:id="@+id/invisibleLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/zoneNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="zoneNumber"
+                android:layout_gravity="center"
+                />
+            <TextView
+                android:id="@+id/zoneOfficer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="zoneOffier"
+                android:layout_gravity="center"
+                />
+            <TextView
+                android:id="@+id/zoneNote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="zoneNote"
+                android:layout_gravity="center"
+                />
+
+
+            <Button
+                android:id="@+id/callButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="BIAKNA"
+                android:background="#DD7272"
+                android:textColor="#fff"
+                android:onClick="zawnnaClick"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>

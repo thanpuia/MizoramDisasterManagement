@@ -1,5 +1,6 @@
 package com.lalthanpuiachhangte.mizoramdisastermanagement.AfterLogin;
 
+import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +28,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import io.nlopez.smartlocation.OnLocationUpdatedListener;
+import io.nlopez.smartlocation.SmartLocation;
+
 import static com.lalthanpuiachhangte.mizoramdisastermanagement.AfterLogin.DashboardActivity.mUser;
 
 public class ReportIncidentFormActivity extends AppCompatActivity {
@@ -36,14 +40,15 @@ public class ReportIncidentFormActivity extends AppCompatActivity {
     EditText disasterDetailsET;
 
     Spinner district;
-    Spinner locality;
-
+   // Spinner locality;
+    AutoCompleteTextView locality;
     Button incidentButton;
 
     Officer mOfficer ;
     Incident mIncident;
     public String tempDistrict;
     public String tempLocality;
+    Location currentLocation =null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,11 +76,16 @@ public class ReportIncidentFormActivity extends AppCompatActivity {
         ArrayAdapter<CharSequence> districtAdapter = ArrayAdapter.createFromResource(this,R.array.district,android.R.layout.simple_spinner_dropdown_item);
         district.setAdapter(districtAdapter);
 
+        //SET LOCALITY
+        ArrayAdapter<CharSequence> localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.locality,android.R.layout.select_dialog_item);
+        locality.setThreshold(1);
+        locality.setAdapter(localityAdapter);
+
         //Dynamically change the locality according to the district
         //CHANGE THE LOCALITY DYNAMICALLY WITH DISTRICT
         //3. Locality /Village
 
-        district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+       /* district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -108,9 +118,20 @@ public class ReportIncidentFormActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
+        });*/
 
-
+//GET THE CURRENT LOCATION
+        SmartLocation.with(getApplicationContext()).location()
+                .oneFix()
+                .start(new OnLocationUpdatedListener() {
+                    @Override
+                    public void onLocationUpdated(Location location) {
+                        //Toast.makeText(context,"Location"+location.getLatitude(),Toast.LENGTH_SHORT).show();
+                        //  mLocation[0] = location;
+                        //Toast.makeText(context,"Location in array"+mLocation[0].getLatitude(),Toast.LENGTH_SHORT).show();
+                        currentLocation = location;
+                    }
+                });
 
 
     }
@@ -126,7 +147,8 @@ public class ReportIncidentFormActivity extends AppCompatActivity {
         String tempDisasterType = String.valueOf(disasterTypeSpinner.getSelectedItem());
         String tempLandmark = String.valueOf(landmarkET.getText());
         String tempDisasterDetails = String.valueOf(disasterDetailsET.getText());
-        tempLocality = locality.getSelectedItem().toString();
+        //tempLocality = locality.getSelectedItem().toString();
+        tempLocality = locality.getText().toString();
 
         //1.2 GET THE DATA FROM THE SHARED PREFERENCE
         String sharedPreferenceUsername = mUser.getUsername();
@@ -139,40 +161,40 @@ public class ReportIncidentFormActivity extends AppCompatActivity {
         String mCurrentTime=dateFormat.format(date);
         System.out.println("Current time of the day using Calendar - 24 hour format: "+ mCurrentTime);
 
-        //1.4 GET THE ZONAL OFFICER DATA
-        //ONLY BOTH ARE FILLED
-        if(!tempDistrict.equals("") && !tempLocality.equals("")){
-            String url = MainActivity.ipAddress + "/test/" + tempLocality;
-            Ion.with(this)
-                    .load(url)
-                    .as(new TypeToken<Officer>(){})
-                    .setCallback(new FutureCallback<Officer>() {
-                        @Override
-                        public void onCompleted(Exception e, Officer result) {
-                             if(result==null){
-                                 Toast.makeText(getApplicationContext(),"locality may not be maaping in the db",Toast.LENGTH_SHORT).show();
-                                // incidentButton.setEnabled(true);
-
-                             }
-                            else{
-                            String tempZonalOfficerName = result.getOfficerName();
-                            String tempZonalOfficerContact = result.getOfficerContact();
-
-                            //2.1() SET THE ZONAL OFFICER DETAILS HERE
-                            mIncident.setOfficerContact(tempZonalOfficerContact);
-                            // mReleif.setZonalOfficerId();
-                            mIncident.setOfficerName(tempZonalOfficerName);
-                            // mReleif.setZoneId();
-                                }
-                        }
-
-
-                    });
-        }else{
-            incidentButton.setVisibility(View.VISIBLE);
-            Toast.makeText(getApplicationContext(),"Try again",Toast.LENGTH_SHORT).show();
-
-        }
+//        //1.4 GET THE ZONAL OFFICER DATA
+//        //ONLY BOTH ARE FILLED
+//        if(!tempDistrict.equals("") && !tempLocality.equals("")){
+//            String url = MainActivity.ipAddress + "/test/" + tempLocality;
+//            Ion.with(this)
+//                    .load(url)
+//                    .as(new TypeToken<Officer>(){})
+//                    .setCallback(new FutureCallback<Officer>() {
+//                        @Override
+//                        public void onCompleted(Exception e, Officer result) {
+//                             if(result==null){
+//                                 Toast.makeText(getApplicationContext(),"locality may not be maaping in the db",Toast.LENGTH_SHORT).show();
+//                                // incidentButton.setEnabled(true);
+//
+//                             }
+//                            else{
+//                            String tempZonalOfficerName = result.getOfficerName();
+//                            String tempZonalOfficerContact = result.getOfficerContact();
+//
+//                            //2.1() SET THE ZONAL OFFICER DETAILS HERE
+//                            mIncident.setOfficerContact(tempZonalOfficerContact);
+//                            // mReleif.setZonalOfficerId();
+//                            mIncident.setOfficerName(tempZonalOfficerName);
+//                            // mReleif.setZoneId();
+//                                }
+//                        }
+//
+//
+//                    });
+//        }else{
+//            incidentButton.setVisibility(View.VISIBLE);
+//            Toast.makeText(getApplicationContext(),"Try again",Toast.LENGTH_SHORT).show();
+//
+//        }
 
 
         //2.
@@ -184,8 +206,8 @@ public class ReportIncidentFormActivity extends AppCompatActivity {
         mIncident.setDisastersDetails(tempDisasterDetails);
         //mIncident.setDetails();
         mIncident.setDistrict(tempDistrict);
-        //mIncident.setLng();
-        //mIncident.setLat();
+        mIncident.setLng(String.valueOf(currentLocation.getLongitude()));
+        mIncident.setLat(String.valueOf(currentLocation.getLatitude()));
         mIncident.setLocation(tempLocality);
         mIncident.setUsername(sharedPreferenceUsername);
         mIncident.setPhone(sharedPreferencePhone);
