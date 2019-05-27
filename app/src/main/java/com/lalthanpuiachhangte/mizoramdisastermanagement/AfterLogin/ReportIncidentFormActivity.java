@@ -39,14 +39,14 @@ public class ReportIncidentFormActivity extends AppCompatActivity {
     EditText landmarkET;
     EditText disasterDetailsET;
 
-    Spinner district;
+   // Spinner district;
    // Spinner locality;
     AutoCompleteTextView locality;
     Button incidentButton;
 
     Officer mOfficer ;
     Incident mIncident;
-    public String tempDistrict;
+    ///public String tempDistrict;
     public String tempLocality;
     Location currentLocation =null;
 
@@ -62,19 +62,19 @@ public class ReportIncidentFormActivity extends AppCompatActivity {
         landmarkET = findViewById(R.id.landmarks);
         disasterDetailsET = findViewById(R.id.disasterDetails);
 
-        district = findViewById(R.id.district);
+     //   district = findViewById(R.id.district);
         locality = findViewById(R.id.locality);
 
         incidentButton = findViewById(R.id.incidentReportButton);
 
         //1. Spinner auto fill for Disaster type
-        ArrayAdapter<CharSequence> disasterTypeAdapter = ArrayAdapter.createFromResource(this,R.array.disasterType,android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> disasterTypeAdapter = ArrayAdapter.createFromResource(this,R.array.incidentList,android.R.layout.simple_spinner_dropdown_item);
         disasterTypeSpinner.setAdapter(disasterTypeAdapter);
 
 
         //2. Spinner auto fill for district
-        ArrayAdapter<CharSequence> districtAdapter = ArrayAdapter.createFromResource(this,R.array.district,android.R.layout.simple_spinner_dropdown_item);
-        district.setAdapter(districtAdapter);
+      //  ArrayAdapter<CharSequence> districtAdapter = ArrayAdapter.createFromResource(this,R.array.district,android.R.layout.simple_spinner_dropdown_item);
+      //  district.setAdapter(districtAdapter);
 
         //SET LOCALITY
         ArrayAdapter<CharSequence> localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.locality,android.R.layout.select_dialog_item);
@@ -205,7 +205,7 @@ public class ReportIncidentFormActivity extends AppCompatActivity {
         mIncident.setLandmarks(tempLandmark);
         mIncident.setDisastersDetails(tempDisasterDetails);
         //mIncident.setDetails();
-        mIncident.setDistrict(tempDistrict);
+    //    mIncident.setDistrict(tempDistrict);
         mIncident.setLng(String.valueOf(currentLocation.getLongitude()));
         mIncident.setLat(String.valueOf(currentLocation.getLatitude()));
         mIncident.setLocation(tempLocality);

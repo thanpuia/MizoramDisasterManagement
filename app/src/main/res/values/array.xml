@@ -11,4 +11,20 @@
         <item>Gas Stove</item>
         <item>etc..</item>
     </string-array>
+
+    <string-array name="incidentList">
+        <item> Thlipui (Storm)</item>
+        <item>Rial (Hail Storm)</item>
+        <item> Road Block</item>
+        <item> Leimin (Landslide)</item>
+        <item> In Chhia (House Damage)</item>
+        <item> In Chim (Building Collapse)</item>
+        <item> Kangmei (Fire)</item>
+        <item> Ram Kang (Wild Fire)</item>
+        <item> Thil hlauhawm thei (Possible Danger)</item>
+        <item>Other (Chhiatna dang)</item>
+        <item>Flash flood</item>
+        <item>Blast</item>
+        <item>Tuitla (Drowning)</item>
+    </string-array>
 </resources>

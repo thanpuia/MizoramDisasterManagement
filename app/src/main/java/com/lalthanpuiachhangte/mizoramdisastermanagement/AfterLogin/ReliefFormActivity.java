@@ -39,7 +39,7 @@ import static com.lalthanpuiachhangte.mizoramdisastermanagement.AfterLogin.Dashb
 public class ReliefFormActivity extends AppCompatActivity {
 
     AutoCompleteTextView materialET;
-    Spinner districtSpinner;
+    //Spinner districtSpinner;
     //Spinner localitySpinner;
     AutoCompleteTextView locality;
 
@@ -71,7 +71,7 @@ public class ReliefFormActivity extends AppCompatActivity {
         quantityET = findViewById(R.id.quantity);
 
         disasterDetailsET = findViewById(R.id.disasterDetails);
-        districtSpinner = findViewById(R.id.district);
+      //  districtSpinner = findViewById(R.id.district);
        // localitySpinner = findViewById(R.id.locality);
         locality = findViewById(R.id.locality);
 
@@ -107,8 +107,8 @@ public class ReliefFormActivity extends AppCompatActivity {
         materialET.setAdapter(adapter);
 
         //2. District
-        ArrayAdapter<CharSequence> districtAdapter = ArrayAdapter.createFromResource(this,R.array.district,android.R.layout.simple_spinner_dropdown_item);
-        districtSpinner.setAdapter(districtAdapter);
+     //   ArrayAdapter<CharSequence> districtAdapter = ArrayAdapter.createFromResource(this,R.array.district,android.R.layout.simple_spinner_dropdown_item);
+     //   districtSpinner.setAdapter(districtAdapter);
 
         //CHANGE THE LOCALITY DYNAMICALLY WITH DISTRICT
         //3. Locality /Village
