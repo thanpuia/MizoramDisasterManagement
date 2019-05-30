@@ -1,0 +1,7 @@
+1. Create the myFCMClass.
+2. add the getinstace in mainActivity
+3. connect your app with firebase
+4. in spring create two new class HeaderRequestInterceptor and AndroidPushNotificationService
+5. also create a new function in the controller
+6. get the unique server key from firebase and paste it in the spring side AndroidPushNotificatoin.
+7. get the unique key in firebase and paste in the
