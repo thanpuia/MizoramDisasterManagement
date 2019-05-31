@@ -138,6 +138,8 @@ public class ReportIncidentFormActivity extends AppCompatActivity {
 
     public void incidentReportClick(View view) {
 
+        Log.d("TAG","start on click");
+
         //make the button disable to avoid sendng twince
         //incidentButton.setEnabled(false);
         incidentButton.setVisibility(View.GONE);
@@ -216,6 +218,9 @@ public class ReportIncidentFormActivity extends AppCompatActivity {
         //mIncident.setZoneId();
 
         String url = MainActivity.ipAddress + "/post/incident";
+       // String url = MainActivity.ipAddress + "/sendd";
+        Log.d("TAG","before i on click");
+
         //2.2 UPLOADING THE RELIEF REQUEST FORM
         Ion.with(this)
                 .load(url)
@@ -228,6 +233,7 @@ public class ReportIncidentFormActivity extends AppCompatActivity {
                         Log.i("JSON Response","Result: "+result);
 
                        // mIncident.setVisibility(View.VISIBLE);
+                        Log.d("TAG","insidde ion");
 
                         Toast.makeText(getApplicationContext(),"Successfully sent", Toast.LENGTH_SHORT).show();
                         incidentButton.setVisibility(View.VISIBLE);

@@ -9,17 +9,24 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.Entity.User;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.MainActivity;
@@ -36,11 +43,16 @@ public class DashboardActivity extends AppCompatActivity {
     Button rescueMeButton;
 
     static User mUser = new User();
+
+    public String TOPIC = "";//THIS WILLL BE TAKEN FROM THE SHARED PREFERENCE OF THE APP. IT SHOULD BE UNIQUE TO EVERY APP
+    private final String TAG = "JSA-FCM";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE); getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_dashboard);
+        Log.d(TAG, "oncreate Starting");
 
         rescueMeButton = findViewById(R.id.rescueMeButton);
         checkLocationPermission();
@@ -50,6 +62,30 @@ public class DashboardActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String json = sharedPreferences.getString("userObject","");
         mUser = gson.fromJson(json, User.class);
+
+        //CREATING INSTANCE FOR FCM
+        TOPIC = "7810911046";//mUser.getPhoneNo(); //GETTING THE TOPIC DYNAMICALLY SO THAT IT CAN RECEIVED THE PRESCRIBE NOTIFICATION
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC);
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("TAG", "getInstanceId failed", task.getException());
+                            return;
+                        }
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+
+                        // Log and toast
+                        String msg = getString(R.string.msg_token_fmt, token);
+                        Log.d("TAG", msg);
+                        Toast.makeText(DashboardActivity.this, msg, Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "inside onCreate > onComplete");
+                    }
+                });
+        Log.d(TAG, "inside onCreate");
+
 
         //runtime permission for phone call
         if (ContextCompat.checkSelfPermission(this,
@@ -89,6 +125,7 @@ public class DashboardActivity extends AppCompatActivity {
                 return false;
             }
         });
+        Log.d(TAG, "onCreate Ending");
     }
 
     public void requestReliefClick(View view) {
@@ -224,7 +261,7 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     public void zonalOfficerClick(View view) {
-        Intent intent = new Intent(this,ZonalOfficerActivity.class);
+        Intent intent = new Intent(getApplicationContext(),ZonalOfficerActivity.class);
         startActivity(intent);
     }
 }

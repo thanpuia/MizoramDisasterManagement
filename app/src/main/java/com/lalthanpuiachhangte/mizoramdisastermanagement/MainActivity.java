@@ -29,19 +29,19 @@ public class MainActivity extends AppCompatActivity {
     EditText passwordET;
     EditText userPhoneNo;
     Button loginButton;
-    public final static String ipAddress = "http://10.180.243.2:8080";
+    public final static String ipAddress = "http://10.180.243.3:8080";
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor prefEditor;
-    private final String TOPIC = "7810911046";//THIS WILLL BE TAKEN FROM THE SHARED PREFERENCE OF THE APP. IT SHOULD BE UNIQUE TO EVERY APP
+   // private final String TOPIC = "";//THIS WILLL BE TAKEN FROM THE SHARED PREFERENCE OF THE APP. IT SHOULD BE UNIQUE TO EVERY APP
 
-    private final String TAG = "JSA-FCM";
+   // private final String TAG = "JSA-FCM";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Log.d("TAG", "Mainacitivuty");
        // usernameET = findViewById(R.id.usernameEt);
         userPhoneNo = findViewById(R.id.phoneNumberEt);
         passwordET = findViewById(R.id.passwordEt);
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC);
+       /* FirebaseMessaging.getInstance().subscribeToTopic(TOPIC);
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
                     @Override
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(TAG, "inside onCreate > onComplete");
                     }
                 });
-        Log.d(TAG, "inside onCreate");
+        Log.d(TAG, "inside onCreate");*/
 
     }
 

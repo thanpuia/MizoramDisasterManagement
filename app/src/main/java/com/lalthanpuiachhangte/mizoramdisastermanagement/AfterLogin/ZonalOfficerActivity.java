@@ -58,11 +58,10 @@ public class ZonalOfficerActivity extends AppCompatActivity {
 
         addressET = findViewById(R.id.addressName);
 
-
         invisibleLinearLayout.setVisibility(View.GONE);
 
         //GET GPS LOCATION
-        SmartLocation.with(getApplicationContext()).location()
+        SmartLocation.with(this).location()
                 .oneFix()
                 .start(new OnLocationUpdatedListener() {
                     @Override

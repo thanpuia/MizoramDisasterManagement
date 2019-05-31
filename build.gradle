@@ -4,7 +4,7 @@ buildscript {
     repositories {
         google()
         jcenter()
-        
+        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.1'
@@ -19,10 +19,19 @@ allprojects {
     repositories {
         google()
         jcenter()
-        
+        mavenCentral()
+
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+allprojects {
+    repositories {
+        maven {
+            url "https://maven.google.com" // Google's Maven repository
+        }
+    }
+}
+apply plugin: 'com.google.gms.google-services'
