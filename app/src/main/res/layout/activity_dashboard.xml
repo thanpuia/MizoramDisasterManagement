@@ -58,6 +58,7 @@
             android:drawableTop="@drawable/ic_email_home"
             android:text="Notifications"
             android:textAllCaps="false"
+            android:onClick="notificationClick"
 
             />
 

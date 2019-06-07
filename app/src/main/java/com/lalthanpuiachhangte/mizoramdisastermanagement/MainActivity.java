@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     EditText passwordET;
     EditText userPhoneNo;
     Button loginButton;
-    public final static String ipAddress = "http://10.180.243.3:8080";
+    public final static String ipAddress = "http://10.180.243.32:8080";
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor prefEditor;

@@ -5,3 +5,7 @@
 5. also create a new function in the controller
 6. get the unique server key from firebase and paste it in the spring side AndroidPushNotificatoin.
 7. get the unique key in firebase and paste in the
+
+
+  Map<String, String> params = remoteMessage.getData();
+                JSONObject object = new JSONObject(params);

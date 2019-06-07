@@ -200,7 +200,7 @@ public class ReportIncidentFormActivity extends AppCompatActivity {
 
 
         //2.
-        // 2.1INSERT THE DATA
+        // 2.1 INSERT THE DATA
 
         mIncident.setDisasterType(tempDisasterType);
         mIncident.setLocality(tempLocality);
@@ -208,8 +208,8 @@ public class ReportIncidentFormActivity extends AppCompatActivity {
         mIncident.setDisastersDetails(tempDisasterDetails);
         //mIncident.setDetails();
     //    mIncident.setDistrict(tempDistrict);
-        mIncident.setLng(String.valueOf(currentLocation.getLongitude()));
-        mIncident.setLat(String.valueOf(currentLocation.getLatitude()));
+//        mIncident.setLng(String.valueOf(currentLocation.getLongitude()));
+//        mIncident.setLat(String.valueOf(currentLocation.getLatitude()));
         mIncident.setLocation(tempLocality);
         mIncident.setUsername(sharedPreferenceUsername);
         mIncident.setPhone(sharedPreferencePhone);
@@ -230,10 +230,10 @@ public class ReportIncidentFormActivity extends AppCompatActivity {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
                         // do stuff with the result or error
-                        Log.i("JSON Response","Result: "+result);
+                        Log.d("JSON Resasasasponse","Result: "+result);
 
                        // mIncident.setVisibility(View.VISIBLE);
-                        Log.d("TAG","insidde ion");
+                        Log.d("TAG","insidasasasde ion"+result);
 
                         Toast.makeText(getApplicationContext(),"Successfully sent", Toast.LENGTH_SHORT).show();
                         incidentButton.setVisibility(View.VISIBLE);

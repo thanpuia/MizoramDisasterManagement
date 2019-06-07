@@ -1,0 +1,28 @@
+   //CONVERTING TO JSON
+    Map<String, String> params = remoteMessage.getData();
+    JSONObject object = new JSONObject(params);
+
+
+//JSON to Oject
+Gson gson = new Gson();
+String jsonInString = "{\"userId\":\"1\",\"userName\":\"Yasir\"}";
+User user= gson.fromJson(jsonInString, User.class);
+
+
+//Storing object into shared preferences
+
+  //PUT THE USER DATA IN SHARED PREFERENCE
+   SharedPreferences  sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+   SharedPreferences.Editor prefEditor;
+   prefEditor = sharedPreferences.edit();
+   Gson gson = new Gson();
+   String json = gson.toJson(result);//result is the object
+   prefEditor.putString("userObject", json);
+
+//GET THE USER DATE IN SHARED PREFERENCE
+ sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+    Gson gson = new Gson();
+    String json = sharedPreferences.getString("userObject","");
+    mUser = gson.fromJson(json, User.class);
+
+

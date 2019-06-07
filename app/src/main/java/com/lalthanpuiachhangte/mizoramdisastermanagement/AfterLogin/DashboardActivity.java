@@ -28,10 +28,12 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
+import com.lalthanpuiachhangte.mizoramdisastermanagement.Entity.Incident;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.Entity.User;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.MainActivity;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.R;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.location.GetLocation;
+import com.lalthanpuiachhangte.mizoramdisastermanagement.tools.DatabaseHelper;
 
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
@@ -63,8 +65,21 @@ public class DashboardActivity extends AppCompatActivity {
         String json = sharedPreferences.getString("userObject","");
         mUser = gson.fromJson(json, User.class);
 
+        //DATABASE
+       /* DatabaseHelper db = new DatabaseHelper(DashboardActivity.this);
+
+        Incident testIncide= new Incident();
+        testIncide.setDisasterType("yes");
+        testIncide.setUserId("3er");
+        testIncide.setUsername("John Travolta");
+
+        db.insertNotification(testIncide);
+*/
         //CREATING INSTANCE FOR FCM
-        TOPIC = "7810911046";//mUser.getPhoneNo(); //GETTING THE TOPIC DYNAMICALLY SO THAT IT CAN RECEIVED THE PRESCRIBE NOTIFICATION
+       // TOPIC = "7810911046";//mUser.getPhoneNo(); //GETTING THE TOPIC DYNAMICALLY SO THAT IT CAN RECEIVED THE PRESCRIBE NOTIFICATION
+        TOPIC = mUser.getPhoneNo();
+        //TOPIC = "9862689748";
+
         FirebaseMessaging.getInstance().subscribeToTopic(TOPIC);
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
@@ -161,6 +176,7 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     public void mapClick(View view) {
+        //DATABASE
 
 
     }
@@ -262,6 +278,11 @@ public class DashboardActivity extends AppCompatActivity {
 
     public void zonalOfficerClick(View view) {
         Intent intent = new Intent(getApplicationContext(),ZonalOfficerActivity.class);
+        startActivity(intent);
+    }
+
+    public void notificationClick(View view) {
+        Intent intent = new Intent(this,NotificationActivity.class);
         startActivity(intent);
     }
 }
