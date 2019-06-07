@@ -1,5 +1,6 @@
 package com.lalthanpuiachhangte.mizoramdisastermanagement.AfterLogin;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,11 +27,19 @@ public class NotificationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
 
+      // Intent intent = getIntent();
+
+        Bundle extra = getIntent().getExtras();
+
+        if(extra!= null){
+            allIncident = extra.getParcelableArrayList("result");
+        }
+  //     allIncident = getIntent().getExtras().getParcelable("result");
+
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-        DatabaseHelper db = new DatabaseHelper(NotificationActivity.this);
-
-        allIncident = (ArrayList<Incident>) db.getAllNotification();
+     //   DatabaseHelper db = new DatabaseHelper(NotificationActivity.this);
+    //    allIncident = (ArrayList<Incident>) db.getAllNotification();
 
         notificationAdapter = new NotificationAdapter();
 

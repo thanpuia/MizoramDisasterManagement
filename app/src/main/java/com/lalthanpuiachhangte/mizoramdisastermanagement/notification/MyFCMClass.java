@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -35,7 +34,7 @@ public class MyFCMClass extends FirebaseMessagingService {
             Log.d(TAG, "Title: " + remoteMessage.getNotification().getTitle());
             Log.d(TAG, "Body: " + remoteMessage.getNotification().getBody());
 
-        //   string= remoteMessage.getNotification().getBody();
+          //  String= remoteMessage.getNotification().getBody();
           //  MainActivity.change(string);
           //  messageReceived = true;
           //  Toast.makeText(getApplicationContext(),"helo",Toast.LENGTH_SHORT).show();
@@ -60,7 +59,7 @@ public class MyFCMClass extends FirebaseMessagingService {
             db.insertNotification(userIncident);
           //  db.insertNotification(new Incident());
 
-            Log.e(TAG, "object test: " + userIncident.getUsername());
+            Log.d(TAG, "object test: " + userIncident.getUsername());
             Log.d(TAG, "data is here, hurray!!");
 
         }else

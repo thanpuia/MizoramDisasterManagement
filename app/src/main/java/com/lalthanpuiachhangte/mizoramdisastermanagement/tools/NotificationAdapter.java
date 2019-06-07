@@ -14,19 +14,22 @@ import android.widget.TextView;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.Entity.Incident;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.R;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.MyHolder> {
-   ArrayList<Incident> allIncident;
+  public static ArrayList<Incident> allIncident;
 
     final String TAG = "TAG" ;
     public NotificationAdapter(){
 
     }
     public NotificationAdapter(ArrayList<Incident> Incidentdd){
+
+        allIncident = Incidentdd;
+//
+    }
+    public static void addNotify(ArrayList<Incident> Incidentdd){
 
         allIncident = Incidentdd;
 //

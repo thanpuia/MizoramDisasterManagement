@@ -121,7 +121,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_NOTIFICATION,null, values);
       //  db.close();
         Log.d(TAG,"MAY be insert");
-
     }
 
 /*

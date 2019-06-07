@@ -26,3 +26,163 @@ User user= gson.fromJson(jsonInString, User.class);
     mUser = gson.fromJson(json, User.class);
 
 
+// PASSING OBJECT IN INTENT
+
+1. Make the intent parceble
+eg:
+public class Incident implements Parcelable {
+
+    int serialNumber;
+    String disasterType;
+
+
+    public Incident() {
+    }
+
+    public Incident(int serialNumber, String disasterType, String locality,){\
+            this.serialNumber = serialNumber;
+        this.disasterType = disasterType;
+
+    }
+
+    protected Incident(Parcel in) {
+        serialNumber = in.readInt();
+        disasterType = in.readString();
+}
+
+    public static final Creator<Incident> CREATOR = new Creator<Incident>() {
+        @Override
+        public Incident createFromParcel(Parcel in) {
+            return new Incident(in);
+        }
+
+        @Override
+        public Incident[] newArray(int size) {
+            return new Incident[size];
+        }
+    };
+
+    public int getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(int serialNumber) {
+        this.serialNumber = serialNumber;
+    }
+
+    public String getDisasterType() {
+        return disasterType;
+    }
+
+    public void setDisasterType(String disasterType) {
+        this.disasterType = disasterType;
+    }
+
+
+
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(serialNumber);
+        dest.writeString(disasterType);
+
+    }
+}
+
+2. Send the intent:-
+   Intent intent = new Intent(context,NotificationActivity.class);
+   intent.putParcelableArrayListExtra("result", result);
+    startActivity(intent);
+
+3. Receive the intent:-
+        Bundle extra = getIntent().getExtras();
+        if(extra!= null){
+            allIncident = extra.getParcelableArrayList("result");
+        }
+
+
+
+//GETTING THE NOTIFCAITO
+I SENT TWO TIMES. ONE TO THE USER AND THE OTHER TO THE OFFIECER.
+
+database ka hmang leh lo:
+
+tiang hi pa2 ka siam :-
+ -> incident a report velah khi khi a trigger ah a pa hnih in user leh officer ta tur
+ @RequestMapping(value = "/sendZonalOfficer", method = RequestMethod.GET, produces = "application/json")
+	  public ResponseEntity<String> sendZonalOfficer(Incident mIncident) throws JSONException {
+			System.out.println("First function: "+mIncident.getUsername());
+
+		//EXTRACT ALL THE REQUIRED DATA FOR NOTIFICATION
+		int serialNumber = mIncident.getSerialNumber();
+		String disasterType = mIncident.getDisasterType();
+		String locality = mIncident.getLocality();
+
+
+	    JSONObject body = new JSONObject();
+	    body.put("to", "/topics/" + officerContact);
+	    body.put("priority", "high");
+
+	    JSONObject notification = new JSONObject();
+	    notification.put("title", disasterType);
+	    notification.put("body", username);
+
+	    JSONObject data = new JSONObject();
+
+
+	    data.put("serialNumber",serialNumber);
+	    data.put("disasterType",disasterType);
+
+
+	    body.put("notification", notification);
+	    body.put("data", data);
+
+
+	    HttpEntity<String> request = new HttpEntity<String>(body.toString());
+
+	    CompletableFuture<String> pushNotification = androidPushNotificationsService.send(request);
+	    CompletableFuture.allOf(pushNotification).join();
+
+	    System.out.println("inside FCM");
+	    try {
+	      String firebaseResponse = pushNotification.get();
+		    System.out.println("inside FCM try block");
+
+	      return new ResponseEntity<String>(firebaseResponse, HttpStatus.OK);
+	    } catch (InterruptedException e) {
+		    System.out.println("inside FCM catch");
+
+	      e.printStackTrace();
+	    } catch (ExecutionException e) {
+		    System.out.println("inside FCM catch");
+
+	      e.printStackTrace();
+	    }
+
+	    return new ResponseEntity<String>("Push Notification ERROR!", HttpStatus.BAD_REQUEST);
+	  }
+
+
+
+	  --> incident report ker lo in notification hrm2 a in en cuan hei hi a trigger ang
+	   	// notification
+      		@GetMapping("/notifyOfficer/{officerContact}")
+      		public List<Incident> getNotificationOfficer(@PathVariable String officerContact) {
+
+      		System.out.println("OfficerContact: " +officerContact);
+      		//only for officer:
+      		//List<Incident> notify= reportIncidentService.findByOfficerId(officerId);
+      		List<Incident> notify= reportIncidentService.findByOfficerContact(officerContact);
+
+      		return notify;
+
+      	 }
+      	    @GetMapping("/notifyCitizen/{phone}")
+      		public List<Incident> getNotificationCitizen(@PathVariable String phone) {
+
+      		//List<Incident> notify= reportIncidentService.findByOfficerId(officerId);
+      		List<Incident> notify= reportIncidentService.findByPhone(phone);
+
+      		return notify;
+
+      	 }

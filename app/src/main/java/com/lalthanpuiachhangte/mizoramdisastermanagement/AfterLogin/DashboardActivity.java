@@ -8,7 +8,9 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -20,6 +22,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,21 +31,31 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.Entity.Incident;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.Entity.User;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.MainActivity;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.R;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.location.GetLocation;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.tools.DatabaseHelper;
+import com.lalthanpuiachhangte.mizoramdisastermanagement.tools.NotificationAdapter;
 
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
 import android.Manifest;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 public class DashboardActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor prefEditor;
     Button rescueMeButton;
+    LinearLayout dashboardLayout;
 
     static User mUser = new User();
 
@@ -56,6 +69,7 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
         Log.d(TAG, "oncreate Starting");
 
+        dashboardLayout = findViewById(R.id.dashboardLayout);
         rescueMeButton = findViewById(R.id.rescueMeButton);
         checkLocationPermission();
 
@@ -64,6 +78,12 @@ public class DashboardActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String json = sharedPreferences.getString("userObject","");
         mUser = gson.fromJson(json, User.class);
+
+        //CHANGE THE BACKGROUND TO GOLD COLOUR IF THE USER IS OFFCIER . THIS IS FOR TESTING PURPOSE
+        if(mUser.getUserRole().equals("OFFICER")) {
+            dashboardLayout.setBackgroundColor(R.drawable.googleg_disabled_color_18);
+        }
+
 
         //DATABASE
        /* DatabaseHelper db = new DatabaseHelper(DashboardActivity.this);
@@ -76,9 +96,10 @@ public class DashboardActivity extends AppCompatActivity {
         db.insertNotification(testIncide);
 */
         //CREATING INSTANCE FOR FCM
-       // TOPIC = "7810911046";//mUser.getPhoneNo(); //GETTING THE TOPIC DYNAMICALLY SO THAT IT CAN RECEIVED THE PRESCRIBE NOTIFICATION
+        //TOPIC = "7810911046";//mUser.getPhoneNo(); //GETTING THE TOPIC DYNAMICALLY SO THAT IT CAN RECEIVED THE PRESCRIBE NOTIFICATION
         TOPIC = mUser.getPhoneNo();
         //TOPIC = "9862689748";
+
 
         FirebaseMessaging.getInstance().subscribeToTopic(TOPIC);
         FirebaseInstanceId.getInstance().getInstanceId()
@@ -282,7 +303,41 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     public void notificationClick(View view) {
-        Intent intent = new Intent(this,NotificationActivity.class);
-        startActivity(intent);
+
+        String url="";
+
+        if(mUser.getUserRole().equals("OFFICER")) {
+            url = MainActivity.ipAddress+ "/notifyOfficer/"+TOPIC ;
+        } else{
+            url = MainActivity.ipAddress+ "/notifyCitizen/"+TOPIC ;
+        }
+        Ion.with(this)
+                .load(url)
+                .as(new TypeToken<ArrayList<Incident>>(){})
+                .setCallback(new FutureCallback<ArrayList<Incident>>() {
+                    @Override
+                    public void onCompleted(Exception e, ArrayList<Incident> result) {
+
+                       // NotificationAdapter.addNotify(result);
+                        Intent intent = new Intent(getApplicationContext(),NotificationActivity.class);
+                      intent.putParcelableArrayListExtra("result", result);
+                     // intent.putParcelableArrayListExtra("result",(ArrayList<? extends Parcelable>) result);
+                        startActivity(intent);
+                       // Intent intent = new Intent(DashboardActivity.this,NotificationActivity.class).putExtra("myCustomerObj",customerObj);
+
+                        Log.d(TAG,"Result: "+result);
+                        if(result==null){
+                            Toast.makeText(getApplicationContext(),"locality may not be maaping in the db",Toast.LENGTH_SHORT).show();
+
+                        }
+                        else{
+
+                        }
+                    }
+                });
+
+
+        //Intent intent = new Intent(this,NotificationActivity.class);
+        //startActivity(intent);
     }
 }

@@ -1,6 +1,9 @@
 package com.lalthanpuiachhangte.mizoramdisastermanagement.Entity;
 
-public class Incident {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Incident implements Parcelable {
 
     int serialNumber;
     String disasterType;
@@ -51,6 +54,42 @@ public class Incident {
         this.officerName = officerName;
         this.zoneId = zoneId;
     }
+
+    protected Incident(Parcel in) {
+        serialNumber = in.readInt();
+        disasterType = in.readString();
+        locality = in.readString();
+        landmarks = in.readString();
+        disastersDetails = in.readString();
+        details = in.readString();
+        disasterTypeId = in.readString();
+        district = in.readString();
+        inLocation = in.readString();
+        lat = in.readString();
+        lng = in.readString();
+        location = in.readString();
+        username = in.readString();
+        phone = in.readString();
+        reportOn = in.readString();
+        status = in.readString();
+        userId = in.readString();
+        officerContact = in.readString();
+        officerId = in.readString();
+        officerName = in.readString();
+        zoneId = in.readString();
+    }
+
+    public static final Creator<Incident> CREATOR = new Creator<Incident>() {
+        @Override
+        public Incident createFromParcel(Parcel in) {
+            return new Incident(in);
+        }
+
+        @Override
+        public Incident[] newArray(int size) {
+            return new Incident[size];
+        }
+    };
 
     public int getSerialNumber() {
         return serialNumber;
@@ -218,5 +257,35 @@ public class Incident {
 
     public void setZoneId(String zoneId) {
         this.zoneId = zoneId;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(serialNumber);
+        dest.writeString(disasterType);
+        dest.writeString(locality);
+        dest.writeString(landmarks);
+        dest.writeString(disastersDetails);
+        dest.writeString(details);
+        dest.writeString(disasterTypeId);
+        dest.writeString(district);
+        dest.writeString(inLocation);
+        dest.writeString(lat);
+        dest.writeString(lng);
+        dest.writeString(location);
+        dest.writeString(username);
+        dest.writeString(phone);
+        dest.writeString(reportOn);
+        dest.writeString(status);
+        dest.writeString(userId);
+        dest.writeString(officerContact);
+        dest.writeString(officerId);
+        dest.writeString(officerName);
+        dest.writeString(zoneId);
     }
 }

@@ -5,4 +5,6 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="tempColor">#A1B3A1</color>
+
+    <color name="golden">#FBC02D</color>
 </resources>
