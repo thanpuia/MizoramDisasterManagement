@@ -3,12 +3,14 @@
     JSONObject object = new JSONObject(params);
 
 
+
+************************************************************************************************************************************************
 //JSON to Oject
 Gson gson = new Gson();
 String jsonInString = "{\"userId\":\"1\",\"userName\":\"Yasir\"}";
 User user= gson.fromJson(jsonInString, User.class);
 
-
+*********************************************************************************************************************************************************
 //Storing object into shared preferences
 
   //PUT THE USER DATA IN SHARED PREFERENCE
@@ -19,13 +21,14 @@ User user= gson.fromJson(jsonInString, User.class);
    String json = gson.toJson(result);//result is the object
    prefEditor.putString("userObject", json);
 
+******************************************************************************************************************************************************************
 //GET THE USER DATE IN SHARED PREFERENCE
  sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
     Gson gson = new Gson();
     String json = sharedPreferences.getString("userObject","");
     mUser = gson.fromJson(json, User.class);
 
-
+*********************************************************************************************************************************************************
 // PASSING OBJECT IN INTENT
 
 1. Make the intent parceble
@@ -102,6 +105,10 @@ public class Incident implements Parcelable {
 
 
 
+
+
+
+******************************************************************************************************************************************************************
 //GETTING THE NOTIFCAITO
 I SENT TWO TIMES. ONE TO THE USER AND THE OTHER TO THE OFFIECER.
 
@@ -186,3 +193,44 @@ tiang hi pa2 ka siam :-
       		return notify;
 
       	 }
+
+
+
+
+*********************************************************************************************************************************************************
+//Get dialog , Create dialog
+
+  public void finalOrderClick(View view) {
+      //  firebaseConnector.writeToDataBase();
+
+//        FirebaseApp.initializeApp(this);
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference("message");
+//
+//        myRef.setValue("Hello, World!");
+
+        android.app.AlertDialog.Builder builder;
+
+        builder = new android.app.AlertDialog.Builder(view.getContext());
+
+        builder.setMessage("Confirm Order?");
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(getApplicationContext(),"Your Order is sent, wait for confirmation",Toast.LENGTH_LONG).show();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Toast.makeText(getApplicationContext(),"Order cancel",Toast.LENGTH_SHORT).show();
+
+                // User cancelled the dialog
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+}
+
+*********************************************************************************************************************************************************
+recycleview on click
+getAdapterPosition()

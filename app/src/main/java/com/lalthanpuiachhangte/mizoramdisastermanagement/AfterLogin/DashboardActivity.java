@@ -56,6 +56,7 @@ public class DashboardActivity extends AppCompatActivity {
     SharedPreferences.Editor prefEditor;
     Button rescueMeButton;
     LinearLayout dashboardLayout;
+    public static String ROLE=null;
 
     static User mUser = new User();
 
@@ -306,10 +307,18 @@ public class DashboardActivity extends AppCompatActivity {
 
         String url="";
 
+        // officer cuan a ma hming ang office name column a mi zawng a fetch a gai avang in a server ah function dang ka siam a\
+
+        // citizen tan cuan a user name mil ang kha a la deuh tawp function
+
+
         if(mUser.getUserRole().equals("OFFICER")) {
             url = MainActivity.ipAddress+ "/notifyOfficer/"+TOPIC ;
+            ROLE = "OFFICER";
         } else{
             url = MainActivity.ipAddress+ "/notifyCitizen/"+TOPIC ;
+            ROLE = "CITIZEN";
+
         }
         Ion.with(this)
                 .load(url)
@@ -321,6 +330,8 @@ public class DashboardActivity extends AppCompatActivity {
                        // NotificationAdapter.addNotify(result);
                         Intent intent = new Intent(getApplicationContext(),NotificationActivity.class);
                       intent.putParcelableArrayListExtra("result", result);
+
+                      intent.putExtra("ROLE",ROLE);
                      // intent.putParcelableArrayListExtra("result",(ArrayList<? extends Parcelable>) result);
                         startActivity(intent);
                        // Intent intent = new Intent(DashboardActivity.this,NotificationActivity.class).putExtra("myCustomerObj",customerObj);

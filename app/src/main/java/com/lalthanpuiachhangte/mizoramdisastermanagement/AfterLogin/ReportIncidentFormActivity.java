@@ -203,7 +203,7 @@ public class ReportIncidentFormActivity extends AppCompatActivity {
         // 2.1 INSERT THE DATA
 
         mIncident.setDisasterType(tempDisasterType);
-        mIncident.setLocality(tempLocality);
+        mIncident.setLocality(mUser.getLocality());
         mIncident.setLandmarks(tempLandmark);
         mIncident.setDisastersDetails(tempDisasterDetails);
         //mIncident.setDetails();

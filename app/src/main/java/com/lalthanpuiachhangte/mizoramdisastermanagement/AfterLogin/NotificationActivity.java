@@ -30,6 +30,7 @@ public class NotificationActivity extends AppCompatActivity {
       // Intent intent = getIntent();
 
         Bundle extra = getIntent().getExtras();
+        String ROLE = getIntent().getStringExtra("ROLE");
 
         if(extra!= null){
             allIncident = extra.getParcelableArrayList("result");
@@ -43,7 +44,9 @@ public class NotificationActivity extends AppCompatActivity {
 
         notificationAdapter = new NotificationAdapter();
 
-        notificationAdapter = new NotificationAdapter(allIncident);
+        notificationAdapter = new NotificationAdapter(allIncident,ROLE);
         recyclerView.setAdapter(notificationAdapter);
+
+       // notify();
     }
 }

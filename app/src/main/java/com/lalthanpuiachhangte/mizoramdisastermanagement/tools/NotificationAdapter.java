@@ -1,7 +1,10 @@
 package com.lalthanpuiachhangte.mizoramdisastermanagement.tools;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -10,30 +13,40 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.reflect.TypeToken;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+import com.lalthanpuiachhangte.mizoramdisastermanagement.AfterLogin.NotificationActivity;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.Entity.Incident;
+import com.lalthanpuiachhangte.mizoramdisastermanagement.MainActivity;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.MyHolder> {
-  public static ArrayList<Incident> allIncident;
+
+    public static ArrayList<Incident> allIncident;
+    public static String ROLE;
+    public final static String OFFICER ="OFFICER";
 
     final String TAG = "TAG" ;
     public NotificationAdapter(){
 
     }
-    public NotificationAdapter(ArrayList<Incident> Incidentdd){
+    public NotificationAdapter(ArrayList<Incident> Incidentdd, String mROLE){
 
         allIncident = Incidentdd;
+        ROLE = mROLE;
 //
     }
-    public static void addNotify(ArrayList<Incident> Incidentdd){
-
-        allIncident = Incidentdd;
+//    public static void addNotify(ArrayList<Incident> Incidentdd){
 //
-    }
+//        allIncident = Incidentdd;
+////
+//    }
 
     @NonNull
     @Override
@@ -50,8 +63,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         myHolder.date.setText(""+ allIncident.get(i).getReportOn());
         myHolder.details.setText("Details: "+ allIncident.get(i).getDisastersDetails());
         myHolder.address.setText("Address: "+ allIncident.get(i).getLocality());
-        myHolder.status.setText("Status"+ allIncident.get(i).getStatus());
         myHolder.officer.setText("Zone Officer: "+ allIncident.get(i).getOfficerName());
+        myHolder.status.setText("Status: "+ allIncident.get(i).getStatus());
 
         Log.d(TAG,"Reading all notifications");
 
@@ -66,7 +79,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         TextView type, date, details, address, status, officer;
         DatabaseHelper db;
-        List<Incident> allIncident;
+        //List<Incident> allIncident;
+
         public MyHolder(@NonNull View itemView) {
             super(itemView);
             this. db = new DatabaseHelper(itemView.getContext());
@@ -77,15 +91,108 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             this.status= itemView.findViewById(R.id.status);
             this.officer = itemView.findViewById(R.id.officer);
 
-            this.allIncident = null;
+           // this.allIncident = null;
 
+
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getLayoutPosition();
+                    // Toast.makeText(v.getContext(), "position = " + getLayoutPosition(), Toast.LENGTH_SHORT).show();
+
+                    // WE CREATE THIS SO THAT THE CITIZEN WILL NOT BE ABLE TO CLICK ON THE NOTIFICATION
+                    if(ROLE.equals(OFFICER))
+                        dialog(v,position);
+
+
+                }
+            });
 
 
         }
+
+        public void dialog(final View view, final int position){
+
+            android.app.AlertDialog.Builder builder;
+
+            builder = new android.app.AlertDialog.Builder(view.getContext());
+
+
+            //get the incident details
+            // name : address : phone
+            String senderDetails = "Sender Name: "+ allIncident.get(position).getUsername()+"\n"
+                    + "Sender Address: "+ allIncident.get(position).getLocality()+ "\n"
+                    + "Sender Phone: "+ allIncident.get(position).getPhone()+ "\n"
+                    + "Disaster Type: "+ allIncident.get(position).getDisasterType();
+            builder.setMessage(senderDetails);
+            builder.setPositiveButton("seen", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    //Toast.makeText(v.getContext(),"Your Order is sent, wait for confirmation",Toast.LENGTH_LONG).show();
+                    //set changes to the server status
+                   String url = MainActivity.ipAddress+ "/statusChange/"+allIncident.get(position).getSerialNumber() + "/seen"  ;
+
+                    Ion.with(view.getContext())
+                            .load(url)
+                            .as(new TypeToken<ArrayList<Incident>>(){})
+                            .setCallback(new FutureCallback<ArrayList<Incident>>() {
+                                @Override
+                                public void onCompleted(Exception e, ArrayList<Incident> result) {
+                                    //Intent intent = new Intent(view.getContext(),NotificationActivity.class);
+                                    //notifyDataSetChanged();
+                                }
+                            });
+                }
+
+            });
+            builder.setNegativeButton("not seen", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    String url = MainActivity.ipAddress+ "/statusChange/"+allIncident.get(position).getSerialNumber() + "/notSeen" ;
+
+                    Ion.with(view.getContext())
+                            .load(url)
+                            .as(new TypeToken<ArrayList<Incident>>(){})
+                            .setCallback(new FutureCallback<ArrayList<Incident>>() {
+                                @Override
+                                public void onCompleted(Exception e, ArrayList<Incident> result) {
+                                    //Intent intent = new Intent(view.getContext(),NotificationActivity.class);
+                                    //notifyDataSetChanged();
+                                }
+                            });
+                }
+
+            });
+
+            builder.setNeutralButton("resolved", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String url = MainActivity.ipAddress+ "/statusChange/"+allIncident.get(position).getSerialNumber()+ "/resolved";
+
+                    Ion.with(view.getContext())
+                            .load(url)
+                            .as(new TypeToken<ArrayList<Incident>>(){})
+                            .setCallback(new FutureCallback<ArrayList<Incident>>() {
+                                @Override
+                                public void onCompleted(Exception e, ArrayList<Incident> result) {
+                                    //Intent intent = new Intent(view.getContext(),NotificationActivity.class);
+                                    //notifyDataSetChanged();
+                                }
+                            });
+                }
+            });
+
+
+
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
+
+        }
+
 
         @Override
-        public void onClick(View v) {
-
-        }
+        public void onClick(View v) { }
     }
 }
