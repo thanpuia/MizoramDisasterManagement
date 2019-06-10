@@ -6,12 +6,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -34,7 +36,7 @@ public class RegistrationActivity extends AppCompatActivity {
     EditText emergencyContactNumber;
     EditText emergencyContactName;
     Spinner district;
-    Spinner locality;
+    AutoCompleteTextView locality;
     CheckBox volunteer;
     Button registrationButton;
 
@@ -83,7 +85,9 @@ public class RegistrationActivity extends AppCompatActivity {
                 }else if (tempDistrict.equals("Kolasib")){
                     localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Kolasib,android.R.layout.simple_spinner_dropdown_item);
                 } else if (tempDistrict.equals("Aizawl")){
-                    localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Aizawl,android.R.layout.simple_spinner_dropdown_item);
+
+                    localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.locality,android.R.layout.simple_spinner_dropdown_item);
+
                 } else if (tempDistrict.equals("Champhai")){
                     localityAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.Champhai,android.R.layout.simple_spinner_dropdown_item);
                 }else if (tempDistrict.equals("Serchhip")){
@@ -111,7 +115,9 @@ public class RegistrationActivity extends AppCompatActivity {
 
         registrationButton.setVisibility(View.GONE);
 
-        //GET THE DATA AND PUSH TO THE OBJECT
+        tempLocality = String.valueOf(locality.getText());
+
+        //GET THE D AtA AND PUSH TO THE OBJECT
         mUser = new User();
         mUser.setUsername(username.getText().toString());
         mUser.setPhoneNo(phoneNumber.getText().toString());
@@ -123,6 +129,10 @@ public class RegistrationActivity extends AppCompatActivity {
         mUser.setEmergencyContactNo(emergencyContactNumber.getText().toString());
         mUser.setDistrict(tempDistrict);
         mUser.setLocality(tempLocality);
+
+        //SET THIS DEFAULT TO CITIZEN
+        mUser.setUserRole("CITIZEN");
+
 
         if(volunteer.isChecked())
             mUser.setVolunteer("yes");
@@ -144,7 +154,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     public void uploading(User mUser) {
 
-        String url = MainActivity.ipAddress + "/test/newUser";
+        String url = MainActivity.ipAddress + "/signup/newUser";
 
         //UPLOADING THE RELIEF REQUEST FORM
         Ion.with(this)
@@ -157,9 +167,21 @@ public class RegistrationActivity extends AppCompatActivity {
                         // do stuff with the result or error
                         Log.i("JSON Response","Result: "+result);
 
+                        JsonElement subjectJE = result.get("subject");
+                        JsonElement body1JE = result.get("body1");
+
+
+                        String subject = subjectJE.getAsString();
+                        String body1 = body1JE.getAsString();
+
                         registrationButton.setVisibility(View.VISIBLE);
 
-                        Toast.makeText(getApplicationContext(),"Successfully sent", Toast.LENGTH_SHORT).show();
+                        if(body1.equals("duplicate")){
+                            Toast.makeText(getApplicationContext(),"Duplicate phone number", Toast.LENGTH_SHORT).show();
+                        }else if(body1.equals("saved")){
+                            Toast.makeText(getApplicationContext(),"Successfully sent", Toast.LENGTH_SHORT).show();
+
+                        }
 //
 //                        //clear the fields
 //                        materialET.setText("");

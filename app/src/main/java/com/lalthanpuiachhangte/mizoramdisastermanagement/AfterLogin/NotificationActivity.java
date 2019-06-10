@@ -42,10 +42,12 @@ public class NotificationActivity extends AppCompatActivity {
      //   DatabaseHelper db = new DatabaseHelper(NotificationActivity.this);
     //    allIncident = (ArrayList<Incident>) db.getAllNotification();
 
-        notificationAdapter = new NotificationAdapter();
+       // if(allIncident.equals(null)){
+            notificationAdapter = new NotificationAdapter();
 
-        notificationAdapter = new NotificationAdapter(allIncident,ROLE);
-        recyclerView.setAdapter(notificationAdapter);
+            notificationAdapter = new NotificationAdapter(allIncident,ROLE);
+            recyclerView.setAdapter(notificationAdapter);
+     //   }
 
        // notify();
     }

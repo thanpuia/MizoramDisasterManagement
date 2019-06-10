@@ -47,7 +47,7 @@ public class ReportIncidentFormActivity extends AppCompatActivity {
     Officer mOfficer ;
     Incident mIncident;
     ///public String tempDistrict;
-    public String tempLocality;
+    public String tempLocation;
     Location currentLocation =null;
 
     @Override
@@ -150,7 +150,7 @@ public class ReportIncidentFormActivity extends AppCompatActivity {
         String tempLandmark = String.valueOf(landmarkET.getText());
         String tempDisasterDetails = String.valueOf(disasterDetailsET.getText());
         //tempLocality = locality.getSelectedItem().toString();
-        tempLocality = locality.getText().toString();
+        tempLocation = locality.getText().toString();
 
         //1.2 GET THE DATA FROM THE SHARED PREFERENCE
         String sharedPreferenceUsername = mUser.getUsername();
@@ -204,13 +204,15 @@ public class ReportIncidentFormActivity extends AppCompatActivity {
 
         mIncident.setDisasterType(tempDisasterType);
         mIncident.setLocality(mUser.getLocality());
+        Log.d("TAG","Location");
+
         mIncident.setLandmarks(tempLandmark);
         mIncident.setDisastersDetails(tempDisasterDetails);
         //mIncident.setDetails();
     //    mIncident.setDistrict(tempDistrict);
 //        mIncident.setLng(String.valueOf(currentLocation.getLongitude()));
 //        mIncident.setLat(String.valueOf(currentLocation.getLatitude()));
-        mIncident.setLocation(tempLocality);
+        mIncident.setLocation(tempLocation);
         mIncident.setUsername(sharedPreferenceUsername);
         mIncident.setPhone(sharedPreferencePhone);
         mIncident.setReportOn(mCurrentTime);

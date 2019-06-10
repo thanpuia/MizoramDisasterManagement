@@ -4,14 +4,14 @@
 
     <string-array name="district">
 
-        <item>Mamit</item>
-        <item>Kolasib</item>
+        <!--<item>Mamit</item>-->
+        <!--<item>Kolasib</item>-->
         <item>Aizawl</item>
-        <item>Champhai</item>
-        <item>Serchhip</item>
-        <item>Lunglei</item>
-        <item>Lawngtlai</item>
-        <item>Siaha</item>
+        <!--<item>Champhai</item>-->
+        <!--<item>Serchhip</item>-->
+        <!--<item>Lunglei</item>-->
+        <!--<item>Lawngtlai</item>-->
+        <!--<item>Siaha</item>-->
     </string-array>
 
     <string-array name="Mamit">

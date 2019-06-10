@@ -6,5 +6,10 @@
 
     <color name="tempColor">#A1B3A1</color>
 
+    <color name="seen">#FBC02D</color>
+    <color name="notSeen">#CF1616</color>
+    <color name="resolved">#388E3C</color>
+
+
     <color name="golden">#FBC02D</color>
 </resources>

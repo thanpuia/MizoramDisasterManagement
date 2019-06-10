@@ -234,8 +234,6 @@ public class DashboardActivity extends AppCompatActivity {
                         })
                         .create()
                         .show();
-
-
             } else {
                 // No explanation needed, we can request the permission.
                 ActivityCompat.requestPermissions(this,
@@ -271,11 +269,9 @@ public class DashboardActivity extends AppCompatActivity {
 
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
-
                 }
                 return;
             }
-
         }
     }
 
@@ -297,20 +293,14 @@ public class DashboardActivity extends AppCompatActivity {
                 });
         return mLocation[0];
     }
-
     public void zonalOfficerClick(View view) {
         Intent intent = new Intent(getApplicationContext(),ZonalOfficerActivity.class);
         startActivity(intent);
     }
-
     public void notificationClick(View view) {
-
         String url="";
-
         // officer cuan a ma hming ang office name column a mi zawng a fetch a gai avang in a server ah function dang ka siam a\
-
         // citizen tan cuan a user name mil ang kha a la deuh tawp function
-
 
         if(mUser.getUserRole().equals("OFFICER")) {
             url = MainActivity.ipAddress+ "/notifyOfficer/"+TOPIC ;
@@ -318,7 +308,6 @@ public class DashboardActivity extends AppCompatActivity {
         } else{
             url = MainActivity.ipAddress+ "/notifyCitizen/"+TOPIC ;
             ROLE = "CITIZEN";
-
         }
         Ion.with(this)
                 .load(url)
@@ -326,28 +315,27 @@ public class DashboardActivity extends AppCompatActivity {
                 .setCallback(new FutureCallback<ArrayList<Incident>>() {
                     @Override
                     public void onCompleted(Exception e, ArrayList<Incident> result) {
+                        // NotificationAdapter.addNotify(result);
+                        if (result == null) {
+                            Toast.makeText(getApplicationContext(), "No report yet!.locality may not be maaping in the db", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Intent intent = new Intent(getApplicationContext(), NotificationActivity.class);
+                            intent.putParcelableArrayListExtra("result", result);
 
-                       // NotificationAdapter.addNotify(result);
-                        Intent intent = new Intent(getApplicationContext(),NotificationActivity.class);
-                      intent.putParcelableArrayListExtra("result", result);
+                            intent.putExtra("ROLE", ROLE);
+                            // intent.putParcelableArrayListExtra("result",(ArrayList<? extends Parcelable>) result);
+                            startActivity(intent);
+                            // Intent intent = new Intent(DashboardActivity.this,NotificationActivity.class).putExtra("myCustomerObj",customerObj);
 
-                      intent.putExtra("ROLE",ROLE);
-                     // intent.putParcelableArrayListExtra("result",(ArrayList<? extends Parcelable>) result);
-                        startActivity(intent);
-                       // Intent intent = new Intent(DashboardActivity.this,NotificationActivity.class).putExtra("myCustomerObj",customerObj);
-
-                        Log.d(TAG,"Result: "+result);
-                        if(result==null){
-                            Toast.makeText(getApplicationContext(),"locality may not be maaping in the db",Toast.LENGTH_SHORT).show();
-
-                        }
-                        else{
+                            Log.d(TAG, "Result: " + result);
 
                         }
+
+
+
+
                     }
                 });
-
-
         //Intent intent = new Intent(this,NotificationActivity.class);
         //startActivity(intent);
     }

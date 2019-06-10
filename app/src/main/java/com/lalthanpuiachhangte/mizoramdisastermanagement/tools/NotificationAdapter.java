@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -64,6 +66,26 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         myHolder.details.setText("Details: "+ allIncident.get(i).getDisastersDetails());
         myHolder.address.setText("Address: "+ allIncident.get(i).getLocality());
         myHolder.officer.setText("Zone Officer: "+ allIncident.get(i).getOfficerName());
+
+        String statusss="";
+        try{
+             statusss = allIncident.get(i).getStatus();
+             if(statusss.equals(null))
+                 statusss = "notSeen";
+
+        }catch (Exception e){
+            statusss = "not Seen";
+        }
+
+        if(statusss.equals("seen")){
+            myHolder.status.setTextColor(Color.rgb(255, 153, 0));
+        }else if(statusss.equals("notSeen")){
+            myHolder.status.setTextColor(Color.rgb(204, 41, 0));
+        }else if(  statusss.equals("resolved")){
+            myHolder.status.setTextColor(Color.rgb(51, 153, 51));
+        }else              myHolder.status.setTextColor(Color.rgb(204, 41, 0));
+
+
         myHolder.status.setText("Status: "+ allIncident.get(i).getStatus());
 
         Log.d(TAG,"Reading all notifications");

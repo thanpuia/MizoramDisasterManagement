@@ -234,3 +234,9 @@ tiang hi pa2 ka siam :-
 *********************************************************************************************************************************************************
 recycleview on click
 getAdapterPosition()
+
+*********************************************************************************************************************************************************
+       Change color of the text programmatically
+          myHolder.status.setTextColor(ContextCompat.getColor(this, R.color.seen));
+          or
+          mTextView.setTextColor(Color.parseColor("#bdbdbd"));
