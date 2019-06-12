@@ -8,9 +8,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
-import android.os.Parcelable;
 import android.preference.PreferenceManager;
-import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -34,21 +32,18 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
+import com.lalthanpuiachhangte.mizoramdisastermanagement.AfterLogin.notificationActivities.NotificationActivity;
+import com.lalthanpuiachhangte.mizoramdisastermanagement.AfterLogin.notificationActivities.NotificationActivity1;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.Entity.Incident;
+import com.lalthanpuiachhangte.mizoramdisastermanagement.Entity.Relief;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.Entity.User;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.MainActivity;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.R;
-import com.lalthanpuiachhangte.mizoramdisastermanagement.location.GetLocation;
-import com.lalthanpuiachhangte.mizoramdisastermanagement.tools.DatabaseHelper;
-import com.lalthanpuiachhangte.mizoramdisastermanagement.tools.NotificationAdapter;
 
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
-import android.Manifest;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -62,6 +57,8 @@ public class DashboardActivity extends AppCompatActivity {
 
     public String TOPIC = "";//THIS WILLL BE TAKEN FROM THE SHARED PREFERENCE OF THE APP. IT SHOULD BE UNIQUE TO EVERY APP
     private final String TAG = "JSA-FCM";
+
+    public String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -299,44 +296,69 @@ public class DashboardActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void notificationClick(View view) {
-        String url="";
+
+        Intent intent = new Intent(this, NotificationActivity1.class);
+        intent.putExtra("ROLE", mUser.getUserRole() );
+        intent.putExtra("TOPIC", TOPIC );
+        startActivity(intent);
+
         // officer cuan a ma hming ang office name column a mi zawng a fetch a gai avang in a server ah function dang ka siam a\
         // citizen tan cuan a user name mil ang kha a la deuh tawp function
 
-        if(mUser.getUserRole().equals("OFFICER")) {
-            url = MainActivity.ipAddress+ "/notifyOfficer/"+TOPIC ;
+        //********************NOTIFICATION A TANG NOTIFICATION FOR RELEIF AND INCIDENT CU AU TOP. LINEAR A IN AU LO IN IN BRANCH OUR SE DUAL IN NOTIFICATION TANG
+
+      /*  if(mUser.getUserRole().equals("OFFICER")) {
+            url = MainActivity.ipAddress+ "/notifyOfficer/incident/"+TOPIC ;
             ROLE = "OFFICER";
         } else{
-            url = MainActivity.ipAddress+ "/notifyCitizen/"+TOPIC ;
+            url = MainActivity.ipAddress+ "/notifyCitizen/incident/"+TOPIC ;
             ROLE = "CITIZEN";
         }
+        final Intent intent = new Intent(getApplicationContext(), NotificationActivity.class);
+
         Ion.with(this)
                 .load(url)
                 .as(new TypeToken<ArrayList<Incident>>(){})
                 .setCallback(new FutureCallback<ArrayList<Incident>>() {
                     @Override
-                    public void onCompleted(Exception e, ArrayList<Incident> result) {
+                    public void onCompleted(Exception e, ArrayList<Incident> incidentResult) {
                         // NotificationAdapter.addNotify(result);
-                        if (result == null) {
+                        if (incidentResult == null) {
                             Toast.makeText(getApplicationContext(), "No report yet!.locality may not be maaping in the db", Toast.LENGTH_SHORT).show();
                         } else {
-                            Intent intent = new Intent(getApplicationContext(), NotificationActivity.class);
-                            intent.putParcelableArrayListExtra("result", result);
 
+                            intent.putParcelableArrayListExtra("incidentResult", incidentResult);
                             intent.putExtra("ROLE", ROLE);
-                            // intent.putParcelableArrayListExtra("result",(ArrayList<? extends Parcelable>) result);
-                            startActivity(intent);
-                            // Intent intent = new Intent(DashboardActivity.this,NotificationActivity.class).putExtra("myCustomerObj",customerObj);
 
-                            Log.d(TAG, "Result: " + result);
-
+                            Log.d(TAG, "Result: " + incidentResult);
                         }
+
+                        String url2;
+                        if(ROLE.equals("OFFICER")){
+                            url2 =  MainActivity.ipAddress+ "/notifyOfficer/relief/"+TOPIC ;
+                        }else
+                            url2 =  MainActivity.ipAddress+ "/notifyCitizen/relief/"+TOPIC ;
+
+
+                        Ion.with(getApplicationContext())
+                                .load(url2)
+                                .as(new TypeToken<ArrayList<Relief>>(){})
+                                .setCallback(new FutureCallback<ArrayList<Relief>>() {
+                                    @Override
+                                    public void onCompleted(Exception e, ArrayList<Relief> reliefResult) {
+
+                                        intent.putParcelableArrayListExtra("reliefResult", reliefResult);
+
+                                        startActivity(intent);
+
+                                    }
+                                });
 
 
 
 
                     }
-                });
+                });*/
         //Intent intent = new Intent(this,NotificationActivity.class);
         //startActivity(intent);
     }

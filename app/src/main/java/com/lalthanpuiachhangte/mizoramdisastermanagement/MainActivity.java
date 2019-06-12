@@ -33,16 +33,17 @@ public class MainActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor prefEditor;
-   // private final String TOPIC = "";//THIS WILLL BE TAKEN FROM THE SHARED PREFERENCE OF THE APP. IT SHOULD BE UNIQUE TO EVERY APP
 
-   // private final String TAG = "JSA-FCM";
+    // private final String TOPIC = "";
+    // THIS WILLL BE TAKEN FROM THE SHARED PREFERENCE OF THE APP. IT SHOULD BE UNIQUE TO EVERY APP
+    // private final String TAG = "JSA-FCM";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d("TAG", "Mainacitivuty");
-       // usernameET = findViewById(R.id.usernameEt);
+        // usernameET = findViewById(R.id.usernameEt);
         userPhoneNo = findViewById(R.id.phoneNumberEt);
         passwordET = findViewById(R.id.passwordEt);
         loginButton = findViewById(R.id.loginButton);
@@ -101,8 +102,9 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onCompleted(Exception e, User result) {
 
-                            if(result==null){
-                                Toast.makeText(getApplicationContext(),"incorrect",Toast.LENGTH_SHORT).show();
+                            if(result==null || result.getUsername() == null){
+                                Toast.makeText(getApplicationContext(),"incorrect or null return",Toast.LENGTH_SHORT).show();
+
                             }
                             else{
                                 //PUT THE USER DATA IN SHARED PREFERENCE

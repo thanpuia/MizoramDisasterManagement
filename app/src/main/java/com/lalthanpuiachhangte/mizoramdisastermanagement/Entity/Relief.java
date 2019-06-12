@@ -1,8 +1,11 @@
 package com.lalthanpuiachhangte.mizoramdisastermanagement.Entity;
 
-public class Relief {
+import android.os.Parcel;
+import android.os.Parcelable;
 
-    int serial_number;
+public class Relief implements Parcelable {
+
+    int serialNumber;
     String details;
     String district;
     String landmarks;
@@ -27,7 +30,7 @@ public class Relief {
     }
 
     public Relief(int serial_number, String details, String district, String landmarks, String lat, String lng, String locality, String material, String material_id, String username, String phone, String quantity, String requestOn, String status, String user_id, String officerName, String officerId, String officerContact, String zoneId) {
-        this.serial_number = serial_number;
+        this.serialNumber = serial_number;
         this.details = details;
         this.district = district;
         this.landmarks = landmarks;
@@ -48,12 +51,46 @@ public class Relief {
         this.zoneId = zoneId;
     }
 
-    public int getSerial_number() {
-        return serial_number;
+    protected Relief(Parcel in) {
+        serialNumber = in.readInt();
+        details = in.readString();
+        district = in.readString();
+        landmarks = in.readString();
+        lat = in.readString();
+        lng = in.readString();
+        locality = in.readString();
+        material = in.readString();
+        material_id = in.readString();
+        username = in.readString();
+        phone = in.readString();
+        quantity = in.readString();
+        requestOn = in.readString();
+        status = in.readString();
+        user_id = in.readString();
+        officerName = in.readString();
+        officerId = in.readString();
+        officerContact = in.readString();
+        zoneId = in.readString();
     }
 
-    public void setSerial_number(int serial_number) {
-        this.serial_number = serial_number;
+    public static final Creator<Relief> CREATOR = new Creator<Relief>() {
+        @Override
+        public Relief createFromParcel(Parcel in) {
+            return new Relief(in);
+        }
+
+        @Override
+        public Relief[] newArray(int size) {
+            return new Relief[size];
+        }
+    };
+
+    public int getserialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(int serialNumber) {
+        this.serialNumber = serialNumber;
     }
 
     public String getDetails() {
@@ -198,5 +235,33 @@ public class Relief {
 
     public void setZoneId(String zoneId) {
         this.zoneId = zoneId;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(serialNumber);
+        dest.writeString(details);
+        dest.writeString(district);
+        dest.writeString(landmarks);
+        dest.writeString(lat);
+        dest.writeString(lng);
+        dest.writeString(locality);
+        dest.writeString(material);
+        dest.writeString(material_id);
+        dest.writeString(username);
+        dest.writeString(phone);
+        dest.writeString(quantity);
+        dest.writeString(requestOn);
+        dest.writeString(status);
+        dest.writeString(user_id);
+        dest.writeString(officerName);
+        dest.writeString(officerId);
+        dest.writeString(officerContact);
+        dest.writeString(zoneId);
     }
 }
