@@ -1,6 +1,11 @@
 package com.lalthanpuiachhangte.mizoramdisastermanagement.Entity;
 
-public class User {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
+
+public class User implements Parcelable {
 
     int    serialNumber;
     String altContactName;
@@ -20,12 +25,12 @@ public class User {
     String updateAt;
     String volunteer;
     String password;
-    String authority;
+    String designation;
 
     public User() {
     }
 
-    public User(int serialNumber, String altContactName, String altContactNo, String createdAt, String district, String email, String emergencyContactName, String emergencyContactNo, String lastLogin, String lat, String lng, String locality, String username, String phoneNo, String userRole, String updateAt, String volunteer, String password, String authority) {
+    public User(int serialNumber, String altContactName, String altContactNo, String createdAt, String district, String email, String emergencyContactName, String emergencyContactNo, String lastLogin, String lat, String lng, String locality, String username, String phoneNo, String userRole, String updateAt, String volunteer, String password, String designation) {
         this.serialNumber = serialNumber;
         this.altContactName = altContactName;
         this.altContactNo = altContactNo;
@@ -44,8 +49,42 @@ public class User {
         this.updateAt = updateAt;
         this.volunteer = volunteer;
         this.password = password;
-        this.authority = authority;
+        this.designation = designation;
     }
+
+    protected User(Parcel in) {
+        serialNumber = in.readInt();
+        altContactName = in.readString();
+        altContactNo = in.readString();
+        createdAt = in.readString();
+        district = in.readString();
+        email = in.readString();
+        emergencyContactName = in.readString();
+        emergencyContactNo = in.readString();
+        lastLogin = in.readString();
+        lat = in.readString();
+        lng = in.readString();
+        locality = in.readString();
+        username = in.readString();
+        phoneNo = in.readString();
+        userRole = in.readString();
+        updateAt = in.readString();
+        volunteer = in.readString();
+        password = in.readString();
+        designation = in.readString();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     public int getSerialNumber() {
         return serialNumber;
@@ -191,11 +230,39 @@ public class User {
         this.password = password;
     }
 
-    public String getAuthority() {
-        return authority;
+    public String getDesignation() {
+        return designation;
     }
 
-    public void setAuthority(String authority) {
-        this.authority = authority;
+    public void setDesignation(String designation) {
+        this.designation = designation;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(serialNumber);
+        dest.writeString(altContactName);
+        dest.writeString(altContactNo);
+        dest.writeString(createdAt);
+        dest.writeString(district);
+        dest.writeString(email);
+        dest.writeString(emergencyContactName);
+        dest.writeString(emergencyContactNo);
+        dest.writeString(lastLogin);
+        dest.writeString(lat);
+        dest.writeString(lng);
+        dest.writeString(locality);
+        dest.writeString(username);
+        dest.writeString(phoneNo);
+        dest.writeString(userRole);
+        dest.writeString(updateAt);
+        dest.writeString(volunteer);
+        dest.writeString(password);
+        dest.writeString(designation);
     }
 }

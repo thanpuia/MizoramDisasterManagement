@@ -32,6 +32,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
+import com.lalthanpuiachhangte.mizoramdisastermanagement.AfterLogin.notificationActivities.GlobalNotificationReceiverActivity;
+import com.lalthanpuiachhangte.mizoramdisastermanagement.AfterLogin.notificationActivities.GlobalNotificationSenderActivity;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.AfterLogin.notificationActivities.NotificationActivity;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.AfterLogin.notificationActivities.NotificationActivity1;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.Entity.Incident;
@@ -51,11 +53,12 @@ public class DashboardActivity extends AppCompatActivity {
     SharedPreferences.Editor prefEditor;
     Button rescueMeButton;
     LinearLayout dashboardLayout;
-    public static String ROLE=null;
 
     static User mUser = new User();
 
-    public String TOPIC = "";//THIS WILLL BE TAKEN FROM THE SHARED PREFERENCE OF THE APP. IT SHOULD BE UNIQUE TO EVERY APP
+    public String TOPIC = "";//THIS WILL BE TAKEN FROM THE SHARED PREFERENCE OF THE APP. IT SHOULD BE UNIQUE TO EVERY APP
+    public final String TOPIC_GLOBAL="TOPIC_GLOBAL";
+    public static String ROLE=null;
     private final String TAG = "JSA-FCM";
 
     public String url;
@@ -99,8 +102,11 @@ public class DashboardActivity extends AppCompatActivity {
         TOPIC = mUser.getPhoneNo();
         //TOPIC = "9862689748";
 
+        FirebaseMessaging f1 = null;// = new Firebase
+        FirebaseMessaging f2 = null;
 
-        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC);
+
+        f1.getInstance().subscribeToTopic(TOPIC );
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
                     @Override
@@ -119,6 +125,32 @@ public class DashboardActivity extends AppCompatActivity {
                         Log.d(TAG, "inside onCreate > onComplete");
                     }
                 });
+
+
+        f2.getInstance().subscribeToTopic(TOPIC_GLOBAL );
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("TAG", "getInstanceId failed", task.getException());
+                            return;
+                        }
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+
+                        // Log and toast
+                        String msg = getString(R.string.msg_token_fmt, token);
+                        Log.d("TAG", "2: "+msg);
+                        Toast.makeText(DashboardActivity.this, msg, Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "inside onCreate > onComplete");
+                    }
+                });
+
+
+
+
+
         Log.d(TAG, "inside onCreate");
 
 
@@ -196,7 +228,16 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     public void mapClick(View view) {
-        //DATABASE
+        //THIS SHOULD NOT BE HERE. AFTER APPROPRITE BUTTON IS MADE, THIS WHOLE CODE SHOULD BE KEEP
+
+        Intent intent= new Intent(this, GlobalNotificationSenderActivity.class);
+
+        intent.putExtra("username",mUser.getUsername());
+        intent.putExtra("designation",mUser.getDesignation());
+
+        startActivity(intent);
+
+
 
 
     }
@@ -361,5 +402,11 @@ public class DashboardActivity extends AppCompatActivity {
                 });*/
         //Intent intent = new Intent(this,NotificationActivity.class);
         //startActivity(intent);
+    }
+
+    public void importantContactClick(View view) {
+
+        Intent intent = new Intent(this, GlobalNotificationReceiverActivity.class);
+        startActivity(intent);
     }
 }

@@ -83,6 +83,8 @@
             android:layout_gravity="center"
             android:drawableTop="@drawable/ic_information_home"
             android:text="Important Contact"
+
+            android:onClick="importantContactClick"
             android:textAllCaps="false" />
 
 

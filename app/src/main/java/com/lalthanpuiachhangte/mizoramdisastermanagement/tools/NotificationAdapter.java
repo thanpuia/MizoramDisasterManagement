@@ -2,7 +2,6 @@ package com.lalthanpuiachhangte.mizoramdisastermanagement.tools;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-import com.lalthanpuiachhangte.mizoramdisastermanagement.AfterLogin.notificationActivities.NotificationActivity;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.Entity.Incident;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.MainActivity;
 import com.lalthanpuiachhangte.mizoramdisastermanagement.R;
@@ -72,7 +70,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             myHolder.status.setTextColor(Color.rgb(204, 41, 0));
         }else if(  statusss.equals("resolved")){
             myHolder.status.setTextColor(Color.rgb(51, 153, 51));
-        }else              myHolder.status.setTextColor(Color.rgb(204, 41, 0));
+        }else myHolder.status.setTextColor(Color.rgb(204, 41, 0));
 
         myHolder.status.setText("Status: "+ allIncident.get(i).getStatus());
 

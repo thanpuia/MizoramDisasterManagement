@@ -61,8 +61,6 @@ public class NotificationActivity extends AppCompatActivity {
                         } else {
 
                             allIncident = incidentResult;
-
-
                             Log.d(TAG, "Result: " + incidentResult.get(0).getUsername());
                         }
 

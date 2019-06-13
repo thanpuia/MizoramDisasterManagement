@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="10dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/senderG"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="senderG"/>
+
+        <TextView
+            android:id="@+id/dateG"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="datee" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/designationG"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="designation"/>
+
+    <TextView
+        android:id="@+id/subjectG"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="subject"/>
+    <TextView
+        android:id="@+id/bodyG"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="address"/>
+    <TextView
+        android:id="@+id/extraG"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="extra"/>
+
+</LinearLayout>
